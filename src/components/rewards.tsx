@@ -5,8 +5,11 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { ChevronRight } from "lucide-react"
 import Logo from "@/assets/logo-circle.svg"
+import { RewardsCalculator } from "./reward-calculator"
+import { useState } from "react"
 
 const Rewards = () => {
+    const [open, setOpen] = useState(false)
     return (
         <section id="tokenomics" className="pt-26 -mt-26" >
             <div className="bg-card">
@@ -16,7 +19,7 @@ const Rewards = () => {
                     </Title>
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
                     <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
-                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " >Rewards Calculator</Button>
+                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => setOpen(true)}>Rewards Calculator</Button>
                         <Button size="lg" className="text-xl font-semibold bg-gradient-secondary px-7 shadow-primary " >Distribution History </Button>
                     </div>
                     <div className="flex flex-col gap-10 mt-14" >
@@ -56,6 +59,7 @@ const Rewards = () => {
                         </div>
                     </div>
                 </Container>
+                <RewardsCalculator open={open} onClose={() => setOpen(false)} />
             </div>
         </section>
     )
