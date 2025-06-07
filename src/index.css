@@ -49,6 +49,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --gradient-primary: linear-gradient(90deg, #9B87F5 0%, #4FD1C5 100%);
   --gradient-secondary: linear-gradient(90deg, #4FD1C5 0%, #286B65 100%);
+  --gradient-secondary-linear: linear-gradient(0deg, #4FD1C5, #4FD1C5);
   --gradient-primary-linear: linear-gradient(90deg, #948FF0 0%, #55528A 100%);
 }
 
@@ -180,6 +181,18 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  .text-gradient-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-secondary-linear {
+    background: var(--gradient-secondary-linear);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   
   .bg-gradient-primary {
     background: var(--gradient-primary);
@@ -191,9 +204,15 @@
   .bg-gradient-primary-linear {
     background: var(--gradient-primary-linear);
   }
+  .bg-gradient-secondary-linear {
+    background: var(--gradient-secondary-linear);
+  }
 }
 
 .shadow-primary {
   box-shadow: 0 0 15px 0 #9B87F580;
+}
+.shadow-secondary {
+  box-shadow: 0 0 9px 0 #4FD1C580;
 }
 

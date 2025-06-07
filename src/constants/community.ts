@@ -1,5 +1,6 @@
+import type { CommunityItem } from "@/types/community";
 
-export const COMMUNITY = [
+export const COMMUNITY: CommunityItem[] = [
     {
         title: "Drippers Own the Identity",
         description: "Members flex $DRIP on Telegram, X, and everywhere that degens gather.",

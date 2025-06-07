@@ -1,10 +1,11 @@
 import { WHY_DRIP } from "@/constants/why-drip"
 import Title from "@/components/title"
+import { Container } from "./container"
 
 const WhyDrip = () => {
   return (
     <section id="features" className="pt-26 -mt-26" >  
-        <div className="px-6 pb-0 md:pb-5" >
+        <Container className="px-6 pb-0 md:pb-5" >
             <Title>
                 Why Drip?
             </Title> 
@@ -24,7 +25,7 @@ const WhyDrip = () => {
                     ))
                 }
             </div>
-        </div>
+        </Container>
     </section>
   ) 
 }

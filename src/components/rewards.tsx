@@ -22,8 +22,8 @@ const Rewards = () => {
                     <div className="flex flex-col gap-10 mt-14" >
                         <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 md:gap-y-6">
                             {REWARDS.map((item, index) => (
-                                <div className="flex flex-col items-center gap-5 p-[30px] border rounded-lg shadow-primary border-primary/20 bg-primary/10" key={`rewards-${index+1}`} >
-                                    <Title type="heading" className={cn("text-[50px] md:text-[50px] font-bold ", `text-${item.color}`)} >{item.value}</Title>
+                                <div className="flex flex-col items-center gap-5 p-[30px] border rounded-lg shadow-primary border-primary/20 bg-primary/10" key={`rewards-${index + 1}`} >
+                                    <Title type="heading" className={cn("text-[50px] md:text-[50px] font-bold ", `${item.color}`)} >{item.value}</Title>
                                     <div className="flex w-[186px] h-6">
                                         <div className="w-2/5 h-full bg-primary"></div>
                                         <div className="w-1/3 h-full bg-secondary"></div>
@@ -39,7 +39,7 @@ const Rewards = () => {
                                 <Title type="heading" className="text-[28px] md:text-3xl font-bold mb-4 text-secondary" >Rewards Every 5 Minutes</Title>
                                 <div className="flex flex-col gap-4">
                                     {REWARDS_EVERY_5_MINUTES.map((item, index) => (
-                                        <p className="flex items-center text-sm text-white md:text-lg" key={`rewards-every-5-minutes-${index+1}`} > <span className="text-secondary" ><ChevronRight className="h-6 mr-1" /></span>{item}</p>
+                                        <p className="flex items-center text-sm text-white md:text-lg" key={`rewards-every-5-minutes-${index + 1}`} > <span className="text-secondary" ><ChevronRight className="h-6 mr-1" /></span>{item}</p>
                                     ))}
                                 </div>
                             </div>

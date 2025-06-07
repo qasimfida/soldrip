@@ -4,19 +4,19 @@ export const REWARDS = [
         title: "Holder Rewards",
         value: "69%",
         description: "Rewards distributed to holders",
-        color: "primary"
+        color: "text-primary"
     },
     {
         title: "Marketing",
         value: "24%",
         description: "Dev rewards plowed into growth",
-        color: "secondary"
+        color: "text-secondary"
     },
     {
         title: "Burn",
         value: "7%",
         description: "Every trade shrinks supply",
-        color: "destructive"
+        color: "text-destructive"
     }
 ];
 
