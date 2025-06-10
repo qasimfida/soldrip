@@ -3,19 +3,19 @@ import type { Navigation } from "@/types/navigations";
 export const NAVIGATION: Navigation[] = [
   {
     label: "Features",
-    href: "#features",
+    href: "/#features",
   },
   {
     label: "Tokenomics",
-    href: "#tokenomics",
+    href: "/#tokenomics",
   },
   {
     label: "FAQ",
-    href: "#faq",
+    href: "/faq",
   },
   {
     label: "Community",
-    href: "#community",
+    href: "/#community",
   }
 ];
 
