@@ -1,43 +1,44 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useState, useEffect, useRef, type RefObject } from 'react';
 
 interface UseInViewOptions {
-  rootMargin?: string;
-  threshold?: number | number[];
+  threshold?: number;
   once?: boolean;
 }
 
-export function useInView<T extends Element>({
-  rootMargin = '0px',
-  threshold = 0,
-  once = false,
-}: UseInViewOptions = {}): [RefObject<T>, boolean] {
-  const ref = useRef<T>(null);
-  const [isInView, setIsInView] = useState(false);
+export function useInView<T extends Element>(
+  options: UseInViewOptions = { threshold: 0.1, once: true }
+): [RefObject<T | null>, boolean] {
+  const [inView, setInView] = useState(false);
+  const ref = useRef<T | null>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
-    
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isVisible = entry.isIntersecting;
-        setIsInView(isVisible);
-        
-        // If once is true and element is visible, unobserve
-        if (once && isVisible && ref.current) {
-          observer.unobserve(ref.current);
+        if (entry.isIntersecting) {
+          setInView(true);
+          if (options.once) {
+            observer.unobserve(currentRef);
+          }
+        } else if (!options.once) {
+          setInView(false);
         }
       },
-      { rootMargin, threshold }
+      {
+        threshold: options.threshold,
+      }
     );
 
-    observer.observe(ref.current);
+    observer.observe(currentRef);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, [rootMargin, threshold, once]);
+  }, [options.threshold, options.once]);
 
-  return [ref, isInView];
+  return [ref, inView];
 } 

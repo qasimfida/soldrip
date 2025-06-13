@@ -1,19 +1,21 @@
 import { useEffect } from 'react'
-import Hero from '../components/hero'
-import HowItWorks from '../components/how-it-works'
-import WhyDrip from '../components/why-drip'
-import Rewards from '../components/rewards'
-import Community from '../components/community'
-import Insurance from '../components/insurance'
-import RoadMap from '../components/road-map'
-import JoinUs from '../components/join-us'
 import { useLocation } from 'react-router-dom'
-import DistributionFormula from '../components/distribution-formula'
+
+import { Header } from '@/components/header'
+import Hero from '@/components/hero'
+import HowItWorks from '@/components/how-it-works'
+import WhyDrip from '@/components/why-drip'
+import Rewards from '@/components/rewards'
+import Community from '@/components/community'
+import Insurance from '@/components/insurance'
+import RoadMap from '@/components/road-map'
+import JoinUs from '@/components/join-us'
+import DistributionFormula from '@/components/distribution-formula'
 import { useWallet } from '@/contexts/wallet'
 
 const Home = () => {
     const location = useLocation();
-    const { address, setAddress, info } = useWallet();
+    const { address, info } = useWallet();
     console.log({ address, info });
     // Handle scrolling to section when the component mounts or hash changes
     useEffect(() => {
@@ -34,7 +36,7 @@ const Home = () => {
     }, [location.hash]);
 
     return (
-        <main>
+        <div className="min-h-screen text-white bg-background">
             <Hero />
             <HowItWorks />
             <WhyDrip />
@@ -44,8 +46,8 @@ const Home = () => {
             <Insurance />
             <RoadMap />
             <JoinUs />
-        </main>
+        </div>
     )
 }
 
-export default Home 
+export default Home
