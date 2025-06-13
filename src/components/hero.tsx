@@ -57,10 +57,9 @@ const Hero = () => {
           <ScrollDownIcon className="relative left-0 right-0 z-10 mx-auto transition-opacity cursor-pointer -bottom-3 hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
           <input
             className="flex items-center justify-center h-12 max-w-full px-3 mt-2 text-sm font-medium text-center border rounded-lg border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
-            value={address}
-            onClick={(e) => {
-              setAddress(e.target.value);
-            }}
+            value={address || ''}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Enter wallet address"
           />
         </div>
       </Container>

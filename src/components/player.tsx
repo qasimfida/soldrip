@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useInView } from '@/hooks/useInView';
 import type { PlayerProps } from '@/types/player';
 
-export const  Player = ({
+export const Player = ({
   src,
   poster,
   className = '',
@@ -10,9 +10,8 @@ export const  Player = ({
   controls = false,
 }: PlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [containerRef, isInView] = useInView<HTMLDivElement>({ 
-    threshold: 0.3, // Video will play when 30% visible
-    rootMargin: '0px'
+  const [containerRef, isInView] = useInView<HTMLDivElement>({
+    threshold: 0.3,
   });
 
   useEffect(() => {
@@ -22,7 +21,6 @@ export const  Player = ({
     if (isInView) {
       videoElement.play().catch(err => {
         console.warn('Auto-play was prevented:', err);
-        // If autoplay is blocked, we can show controls as fallback
         if (videoRef.current) {
           videoRef.current.controls = true;
         }

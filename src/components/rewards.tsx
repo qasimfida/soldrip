@@ -16,7 +16,7 @@ const Rewards = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [rewardsAmount, setRewardsAmount] = useState<number | null>(null)
-    const { address, setAddress, info } = useWallet();
+    const { address, setAddress } = useWallet();
 
     const handleCheckRewards = async () => {
         try {
