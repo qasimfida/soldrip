@@ -6,6 +6,7 @@ import { Container } from "@/components/container";
 import { NAVIGATION } from "@/constants/navigation";
 import type { Navigation } from "@/types/navigations";
 import { Link, useLocation } from "react-router-dom";
+import { DRIP_TOKEN_ADDRESS } from "@/lib/helius-api";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,6 +30,11 @@ export function Header() {
     }
   };
 
+
+  const handleBuyNow = () => {
+    window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank');
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       {/* Desktop Header */}
@@ -47,7 +53,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Button className="text-lg font-semibold transition-opacity x-3 bg-gradient-primary hover:opacity-90">
+          <Button onClick={handleBuyNow} className="text-lg font-semibold transition-opacity x-3 bg-gradient-primary hover:opacity-90">
             Buy Now
           </Button>
         </nav>
@@ -83,7 +89,7 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Button className="w-full font-semibold transition-opacity bg-gradient-primary hover:opacity-90">
+              <Button onClick={handleBuyNow} className="w-full font-semibold transition-opacity bg-gradient-primary hover:opacity-90">
                 Buy Now
               </Button>
             </nav>

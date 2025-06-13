@@ -216,3 +216,239 @@
   box-shadow: 0 0 9px 0 #4FD1C580;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 182 79% 56%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 172 100% 32%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 60.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .shadow-primary {
+    box-shadow: 0px 0px 20px rgba(79, 209, 197, 0.25);
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(to right, #8A2BE2, #4FD1C5);
+  }
+
+  .bg-gradient-primary-linear {
+    background: linear-gradient(270deg, #4FD1C5 0%, #5D5FEF 100%);
+  }
+
+  .bg-gradient-primary-button {
+    background: linear-gradient(to right, #4FD1C5, #5D5FEF);
+  }
+
+  .bg-gradient-secondary {
+    background: linear-gradient(90deg, #4FD1C5 1.25%, #5D5FEF 100%);
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(90deg, #4FD1C5 1.25%, #5D5FEF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .text-gradient-secondary-linear {
+    background: linear-gradient(90deg, #4FD1C5 1.25%, #00ED64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+  
+  .bg-gradient-primary\/50 {
+    background: linear-gradient(to right, rgba(138, 43, 226, 0.5), rgba(79, 209, 197, 0.5));
+  }
+
+  .bg-gradient-primary-linear\/50 {
+    background: linear-gradient(270deg, rgba(79, 209, 197, 0.5) 0%, rgba(93, 95, 239, 0.5) 100%);
+  }
+
+  .bg-gradient-secondary\/50 {
+    background: linear-gradient(90deg, rgba(79, 209, 197, 0.5) 1.25%, rgba(93, 95, 239, 0.5) 100%);
+  }
+}
+
+/* Animate.css utility classes */
+@layer utilities {
+  /* Entrance animations */
+  .animate-fade-in {
+    animation: fadeIn 1s;
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 1s;
+  }
+  
+  .animate-fade-in-down {
+    animation: fadeInDown 1s;
+  }
+  
+  .animate-fade-in-left {
+    animation: fadeInLeft 1s;
+  }
+  
+  .animate-fade-in-right {
+    animation: fadeInRight 1s;
+  }
+  
+  .animate-zoom-in {
+    animation: zoomIn 1s;
+  }
+  
+  /* Attention seekers */
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  .animate-flash {
+    animation: flash 2s infinite;
+  }
+  
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+  
+  .animate-rubber-band {
+    animation: rubberBand 1s;
+  }
+  
+  .animate-shake {
+    animation: shakeX 1s;
+  }
+  
+  .animate-headshake {
+    animation: headShake 1s;
+  }
+  
+  /* Animation speeds */
+  .animate-faster {
+    animation-duration: 0.5s;
+  }
+  
+  .animate-fast {
+    animation-duration: 0.8s;
+  }
+  
+  .animate-slow {
+    animation-duration: 2s;
+  }
+  
+  .animate-slower {
+    animation-duration: 3s;
+  }
+  
+  /* Animation delays */
+  .animate-delay-1 {
+    animation-delay: 0.2s;
+  }
+  
+  .animate-delay-2 {
+    animation-delay: 0.4s;
+  }
+  
+  .animate-delay-3 {
+    animation-delay: 0.6s;
+  }
+  
+  .animate-delay-4 {
+    animation-delay: 0.8s;
+  }
+  
+  .animate-delay-5 {
+    animation-delay: 1s;
+  }
+  
+  /* Animation repetition */
+  .animate-repeat-1 {
+    animation-iteration-count: 1;
+  }
+  
+  .animate-repeat-2 {
+    animation-iteration-count: 2;
+  }
+  
+  .animate-repeat-3 {
+    animation-iteration-count: 3;
+  }
+  
+  .animate-infinite {
+    animation-iteration-count: infinite;
+  }
+}
+

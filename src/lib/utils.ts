@@ -4,3 +4,17 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+/**
+ * Format a number as currency with specified decimal places
+ */
+export function formatCurrency(amount: number, decimals: number = 4): string {
+  if (isNaN(amount)) return '0.00';
+
+  // For small numbers, show more decimals to avoid showing 0.0000
+  if (amount > 0 && amount < 0.0001) {
+    return amount.toFixed(8);
+  }
+
+  return amount.toFixed(decimals);
+}
