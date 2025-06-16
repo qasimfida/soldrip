@@ -4,11 +4,10 @@ import { Button } from './ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import { ScrollDownIcon } from "@/components/icons"
 import { useEffect, useState } from 'react'
-import { useWallet } from '@/contexts/wallet'
+import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
 
 const Hero = () => {
   const [isAnimated, setIsAnimated] = useState(false);
-  const { address, setAddress } = useWallet();
 
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Hero = () => {
   };
 
   const handleBuyNow = () => {
-    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV`, '_blank');
+    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
   }
 
   return (
@@ -57,9 +56,9 @@ const Hero = () => {
           </Button>
           <ScrollDownIcon className="relative left-0 right-0 z-10 mx-auto transition-opacity cursor-pointer -bottom-3 hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
           <input
+            readOnly
             className="flex items-center justify-center h-12 max-w-full px-3 mt-2 text-sm font-medium text-center border rounded-lg border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
-            value={address || ''}
-            onChange={(e) => setAddress(e.target.value)}
+            value={DRIP_TOKEN_ADDRESS}
             placeholder="Enter wallet address"
           />
         </div>

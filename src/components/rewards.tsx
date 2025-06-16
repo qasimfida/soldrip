@@ -5,14 +5,15 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { ChevronRight, Loader2 } from "lucide-react"
 import Logo from "@/assets/logo-circle.svg"
-import RewardsCalculator from "./reward-calculator"
+/* COMMENTED CODE WILL BE ADDED BACK LATER */
+// import RewardsCalculator from "./reward-calculator"
 import { useState } from "react"
 import { formatCurrency } from "@/lib/utils"
 import { useWallet } from "@/contexts/wallet"
-import { getTotalDripRewardsPaidInSol } from '@/lib/helius-api';
+import { DRIP_TOKEN_ADDRESS, getTotalDripRewardsPaidInSol } from '@/lib/helius-api';
 
 const Rewards = () => {
-    const [openCalculator, setOpenCalculator] = useState(false)
+    // const [openCalculator, setOpenCalculator] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [rewardsAmount, setRewardsAmount] = useState<number | null>(null)
@@ -55,11 +56,12 @@ const Rewards = () => {
                     </Title>
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
                     <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
-                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button>
+                        {/* <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
+                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
                         <Button
                             size="lg"
                             className="text-xl font-semibold bg-gradient-secondary px-7 shadow-primary"
-                            onClick={() => window.open('https://revshare.dev/token/w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV', '_blank')}
+                            onClick={() => window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Distribution History
                         </Button>
@@ -154,7 +156,10 @@ const Rewards = () => {
                         </div>
                     </div>
                 </Container>
-                <RewardsCalculator open={openCalculator} onClose={() => setOpenCalculator(false)} />
+                {/* {
+                    openCalculator &&
+                    <RewardsCalculator open={openCalculator} onClose={() => setOpenCalculator(false)} />
+                } */}
             </div>
         </section>
     )

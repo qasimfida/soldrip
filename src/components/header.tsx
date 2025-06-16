@@ -6,6 +6,7 @@ import { Container } from "@/components/container";
 import { NAVIGATION } from "@/constants/navigation";
 import type { Navigation } from "@/types/navigations";
 import { Link, useLocation } from "react-router-dom";
+import { DRIP_TOKEN_ADDRESS } from "@/lib/helius-api";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,7 +31,7 @@ export function Header() {
   };
 
   const handleBuyNow = () => {
-    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV`, '_blank');
+    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
   };
 
   const toggleMenu = () => {

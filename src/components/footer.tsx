@@ -7,9 +7,7 @@ import { Link, useLocation } from "react-router-dom"
 const Footer = () => {
     const location = useLocation();
 
-    // Function to handle navigation clicks
     const handleNavClick = (href: string, event: React.MouseEvent) => {
-        // If it's a hash link on the current page
         if (href.startsWith('/#') && location.pathname === '/') {
             event.preventDefault();
             const id = href.substring(2);
