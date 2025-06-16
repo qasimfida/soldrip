@@ -57,11 +57,11 @@ const Rewards = () => {
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
                     <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
                         {/* <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
-                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
+                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
                         <Button
                             size="lg"
                             className="text-xl font-semibold bg-gradient-secondary px-7 shadow-primary"
-                            onClick={() => window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank')}
+                            onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Distribution History
                         </Button>

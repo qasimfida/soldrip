@@ -41,7 +41,7 @@ const FAQ = () => {
     {
       question: "How are distributions calculated?",
       answer: <>
-        There are one of two ways rewards can be calculated. You can verify how the method is used by checking the <a href={`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`} target='_blank' className='text-primary'>REVSHARE token page</a>.
+        There are one of two ways rewards can be calculated. You can verify how the method is used by checking the <a href={`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`} target='_blank' className='text-primary'>REVSHARE token page</a>.
         <br />
         <br />
         The first method is through a proportional distribution method by which every eligible wallet is given its proportional share of the SOL being distributed during that interval.
