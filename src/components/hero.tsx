@@ -4,21 +4,22 @@ import { Button } from './ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import { ScrollDownIcon } from "@/components/icons"
 import { useEffect, useState } from 'react'
-import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
 import { useWallet } from '@/contexts/wallet'
 
 const Hero = () => {
   const [isAnimated, setIsAnimated] = useState(false);
   const { address, setAddress } = useWallet();
 
+
   useEffect(() => {
-    // Start animations after a small delay for better user experience
     const timer = setTimeout(() => {
       setIsAnimated(true);
     }, 100);
 
     return () => clearTimeout(timer);
   }, []);
+
+
 
   const scrollToContent = () => {
     const element = document.getElementById('how-it-works');
@@ -30,7 +31,7 @@ const Hero = () => {
   };
 
   const handleBuyNow = () => {
-    window.open(`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`, '_blank');
+    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV`, '_blank');
   }
 
   return (

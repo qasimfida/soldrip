@@ -5,11 +5,11 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { ChevronRight, Loader2 } from "lucide-react"
 import Logo from "@/assets/logo-circle.svg"
-import { RewardsCalculator } from "./reward-calculator"
+import RewardsCalculator from "./reward-calculator"
 import { useState } from "react"
-import { getHistoricalRewards } from "@/lib/helius-api"
 import { formatCurrency } from "@/lib/utils"
 import { useWallet } from "@/contexts/wallet"
+import { getTotalDripRewardsPaidInSol } from '@/lib/helius-api';
 
 const Rewards = () => {
     const [openCalculator, setOpenCalculator] = useState(false)
@@ -20,7 +20,6 @@ const Rewards = () => {
 
     const handleCheckRewards = async () => {
         try {
-            // Validate wallet address format (simplified validation)
             if (!address || address.length < 32) {
                 setErrorMessage('Please enter a valid Solana wallet address');
                 return;
@@ -28,16 +27,16 @@ const Rewards = () => {
 
             setIsLoading(true);
             setErrorMessage(null);
-
-            // Call Helius API to get historical rewards
-            const rewards = await getHistoricalRewards(address);
-            console.log({ rewards });
-
-            setRewardsAmount(rewards);
+            const res = await getTotalDripRewardsPaidInSol(address);
+            if ((res as any)?.error) {
+                setErrorMessage((res as any)?.error?.message || 'Error fetching rewards data. Please try again.');
+                return;
+            }
+            setRewardsAmount(res);
             setIsLoading(false);
         } catch (error) {
-            console.error('Error checking rewards:', error);
-            setErrorMessage('Error fetching rewards data. Please try again.');
+            console.log({ error })
+            setErrorMessage((error as any)?.error?.message || 'Error fetching rewards data. Please try again.');
             setIsLoading(false);
         }
     };

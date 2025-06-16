@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 import TelegramIcon from './icons/telegram-icon'
+import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -17,14 +18,13 @@ const FAQ = () => {
   const faqItems = [
     {
       question: "How can you pay rewards if there is no or low volume?",
-      answer: <>A portion of the tax revenue from token transfers is used to top up the treasury for low volume periods. Our treasury includes tokens from other projects that pay a SOL dividend. We are working with yield platforms to generate SOL for the distribution wallet. Projects, such as <a href="https://deepfi.tools" target='_blank' className='text-primary'>DeepFi.tools</a>, also contribute to the treasury’s reserve.
-        <br /><br /> We encourage all large bag holders to contribute their rewards to the treasury, ensuring that we consistently reward everyone in our community. Consistent rewards encourage people to hold and grow our community: <a href="https://solscan.io/account/9WiHZF9asn2k58mbXJaa9kxKzniW3jSyAoQiZAMciis" target='_blank' className='text-primary'>https://solscan.io/account/9WiHZF9asn2k58mbXJaa9kxKzniW3jSyAoQiZAMciis</a>
+      answer: <>A portion of the tax revenue from token transfers is used to top up the treasury for low volume periods. Our treasury includes tokens from other projects that pay a SOL dividend. We are working with yield platforms to generate SOL for the distribution wallet. Projects, such as <a href="http://deepfi.tools" target='_blank' className='text-primary'>DeepFi.tools</a>, also contribute to the treasury’s reserve.<br /><br />We encourage all large bag holders to contribute their rewards to the treasury, ensuring that we consistently reward everyone in our community. Consistent rewards encourage people to hold and grow our community: <a href="https://solscan.io/account/9WiHZF9asn2k58mbXJaa9kxKzniW3jSyAoQiZAMciis" target='_blank' className='text-primary'>https://solscan.io/account/9WiHZF9asn2k58mbXJaa9kxKzniW3jSyAoQiZAMciis</a>
       </>
     },
     {
       question: "How often do you add liquidity to the liquidity pool (LP)?",
       answer: <>We do not have a schedule to add liquidity to the LP. For LP adds we use DEV wallet when we meet some threshold. Community leads and large bag holders have also supported the LP from their personal funds.
-        <br /><br /> If you’re interested in adding to the liquidity pool, please reach out to the admins or owner in <a href="https://t.me/sol_drip" target='_blank' className='text-primary'>Telegram</a>.
+        <br /><br /> If you’re interested in adding to the liquidity pool, please reach out to the admins or owner in <a href="https://t.me/SolDrip_Rewards" target='_blank' className='text-primary'>Telegram</a>.
 
 
       </>
@@ -35,13 +35,19 @@ const FAQ = () => {
     },
     {
       question: "Who is in charge of SOL Drip?",
-      answer: <>While the project was started by a single Dev, it belongs to the community now. The treasury is locked, the liquidity pool is locked, and it’s up to the community to pump our bags. If you’re looking for help or direction, ask in our <a href="https://t.me/sol_drip" target='_blank' className='text-primary'>Telegram group</a>. Seek out partnerships with others in the community to bring about change. For example, this website was created by someone in the community, not the original developer.
+      answer: <>While the project was started by a single Dev, it belongs to the community now. The treasury is locked, the liquidity pool is locked, and it’s up to the community to pump our bags. If you’re looking for help or direction, ask in our <a href="https://t.me/SolDrip_Rewards" target='_blank' className='text-primary'>Telegram group</a>. Seek out partnerships with others in the community to bring about change. For example, this website was created by someone in the community, not the original developer.
       </>
     },
     {
       question: "How are distributions calculated?",
       answer: <>
-        Distributions are calculated through a Square Root Distribution Formula:
+        There are one of two ways rewards can be calculated. You can verify how the method is used by checking the <a href={`https://revshare.dev/token/${DRIP_TOKEN_ADDRESS}`} target='_blank' className='text-primary'>REVSHARE token page</a>.
+        <br />
+        <br />
+        The first method is through a proportional distribution method by which every eligible wallet is given its proportional share of the SOL being distributed during that interval.
+        <br />
+        <br />
+        The second method is through a Square Root Distribution Formula:
         <br /><br />
         A_i = T × (√B_i) / (Σ√B_j)
         <br /><br />
@@ -72,14 +78,12 @@ const FAQ = () => {
       </>
     },
     {
-      question: "How can I contribute to growing our market cap? (I don’t have any skills) ",
-      answer: <>
-        Cults like ours need evangelists, and evangelists don’t need any skills. We simply need you to take action: participate in Telegram raids, vote for us on DEX screener and token websites such as CoinGecko, DexScreener, and MoonTok. You should also post memes from the Telegram on X. Create posts on Reddit sharing why you believe in SOL Drip and our vision. Vote for our skills)?Reddit posts. Tell your friends and family to purchase at least 100,000 SOL Drip tokens. It’s easy to help grow your bags by just taking a few actions each day.
-
+      question: <>How can I contribute to growing our market cap?<br /> (I don’t have any skills)</>,
+      answer: <> Cults like ours need evangelists, and evangelists don’t need any skills.We simply need you to take action: participate in Telegram raids, vote for us on DEX screener and token websites such as CoinGecko, DexScreener, and MoonTok.You should also post memes from the Telegram on X.Create posts on Reddit sharing why you believe in SOL Drip and our vision.Vote for our skills)? Reddit posts.Tell your friends and family to purchase at least 100,000 SOL Drip tokens.It’s easy to help grow your bags by just taking a few actions each day.
       </>
     },
     {
-      question: "How can I contribute to growing our market cap?(I have skills) ",
+      question: <>How can I contribute to growing our market cap?<br />(I have skills)</>,
       answer: <>
         For artists– please create memes and share them on Telegram and social media. We need short form videos for TikTok and Reels as well as stickers and memes for Telegram and X.
         <br />
@@ -89,7 +93,7 @@ const FAQ = () => {
     },
     {
       question: "Where can I download the SOL Drip logos?",
-      answer: <>You may download the logos  <a href="#" target='_blank' className='text-primary'>here:</a></>
+      answer: <>You may download the logos  <a href="https://mega.nz/folder/hagWxbiY#Vn-8zJE5YyRe-n21rOVhLg" target='_blank' className='text-primary'>here:</a></>
     }
   ]
   // background: linear - gradient(180deg, rgba(0, 0, 0, 0) 0 %, #1A1F2C 100 %);
@@ -102,7 +106,7 @@ const FAQ = () => {
         <Container className="relative z-10">
           <div className="px-6 py-7 md:py-25">
             <Title className='text-center text-white'>Frequently Asked Questions</Title>
-            <p className="mt-3 text-center text-gray-200"> Here are the answers to our most frequently asked questions. If your questions are not addressed here, please visit our <a href="https://t.me/sol_drip" target='_blank' className='text-primary'>Telegram</a> and ask the community for assistance.</p>
+            <p className="mt-3 text-center text-gray-200"> Here are the answers to our most frequently asked questions. If your questions are not addressed here, please visit our <a href="https://t.me/SolDrip_Rewards" target='_blank' className='text-primary'>Telegram</a> and ask the community for assistance.</p>
           </div>
         </Container>
       </div >
