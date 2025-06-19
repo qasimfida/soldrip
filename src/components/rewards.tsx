@@ -66,6 +66,14 @@ const Rewards = () => {
                             Distribution History
                         </Button>
                     </div>
+                    <Button
+                        size="lg"
+                        className="flex px-7 mx-auto text-xl font-semibold mt-13 bg-gradient-danger shadow-primary"
+                        onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}
+                    >
+                        Rewards and Tokenomics
+                    </Button>
+
                     <div className="flex flex-col gap-10 mt-14" >
                         <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 md:gap-y-6">
                             {REWARDS.map((item, index) => (

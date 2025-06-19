@@ -314,6 +314,9 @@
   .bg-gradient-secondary {
     background: linear-gradient(90deg, #4FD1C5 1.25%, #5D5FEF 100%);
   }
+  .bg-gradient-danger {
+    background: linear-gradient(90deg, #EC4899 2.88%, #88345D 100%);
+  }
 
   .text-gradient-primary {
     background: linear-gradient(90deg, #4FD1C5 1.25%, #5D5FEF 100%);
