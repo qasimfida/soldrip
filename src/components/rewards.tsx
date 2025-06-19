@@ -55,12 +55,12 @@ const Rewards = () => {
                         Tokenomics and Rewards
                     </Title>
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
-                    <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
-                        {/* <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
-                        <Button size="lg" className="text-xl font-semibold bg-gradient-primary-linear px-7 shadow-primary " onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
+                    <div className="flex flex-col gap-8 justify-center items-center md:flex-row">
+                        {/* <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
+                        <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
                         <Button
                             size="lg"
-                            className="text-xl font-semibold bg-gradient-secondary px-7 shadow-primary"
+                            className="px-7 text-xl font-semibold bg-gradient-secondary shadow-primary"
                             onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Distribution History
@@ -86,11 +86,11 @@ const Rewards = () => {
                                 <Title type="heading" className="text-[28px] md:text-3xl font-bold mb-4 text-secondary" >Rewards Every 5 Minutes</Title>
                                 <div className="flex flex-col gap-4">
                                     {REWARDS_EVERY_5_MINUTES.map((item, index) => (
-                                        <p className="flex items-center text-sm text-white md:text-lg" key={`rewards-every-5-minutes-${index + 1}`} > <span className="text-secondary" ><ChevronRight className="h-6 mr-1" /></span>{item}</p>
+                                        <p className="flex items-center text-sm text-white md:text-lg" key={`rewards-every-5-minutes-${index + 1}`} > <span className="text-secondary" ><ChevronRight className="mr-1 h-6" /></span>{item}</p>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex items-center justify-center" >
+                            <div className="flex justify-center items-center" >
                                 <img src={Logo} alt="rewards" className="w-[164px] h-[164px] md:w-[200px] md:h-[200px]" />
                             </div>
                         </div>
@@ -109,7 +109,7 @@ const Rewards = () => {
                                         placeholder="Enter your wallet address"
                                         value={address}
                                         onChange={(e) => setAddress(e.target.value)}
-                                        className="max-w-full px-4 mx-auto text-center border rounded-lg w-2xl border-white/60 bg-card h-13 placeholder:text-secondary text-secondary"
+                                        className="px-4 mx-auto max-w-full text-center rounded-lg border w-2xl border-white/60 bg-card h-13 placeholder:text-secondary text-secondary"
                                     />
 
                                     {errorMessage && (
@@ -124,7 +124,7 @@ const Rewards = () => {
                                     >
                                         {isLoading ? (
                                             <span className="flex items-center">
-                                                <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Checking...
+                                                <Loader2 className="mr-2 w-5 h-5 animate-spin" /> Checking...
                                             </span>
                                         ) : (
                                             'Check Rewards'
@@ -132,8 +132,8 @@ const Rewards = () => {
                                     </Button>
                                 </>
                             ) : (
-                                <div className="flex flex-col items-center w-full gap-5">
-                                    <div className="flex flex-col items-center w-full max-w-md p-8 border rounded-lg border-primary/20 bg-primary/10">
+                                <div className="flex flex-col gap-5 items-center w-full">
+                                    <div className="flex flex-col items-center p-8 w-full max-w-md rounded-lg border border-primary/20 bg-primary/10">
                                         <p className="mb-2 text-lg text-white">Total Rewards Earned</p>
                                         <Title type="heading" className="text-4xl font-bold md:text-5xl text-gradient-primary">
                                             {formatCurrency(rewardsAmount)} SOL

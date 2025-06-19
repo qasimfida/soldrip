@@ -23,9 +23,12 @@ const HeliusAPI = 'https://api.helius.xyz/v0';
 export interface HeliusEnhancedTransaction {
     signature: string;
     nativeTransfers?: {
+        fromUserAccount?: string;
         toUserAccount?: string;
         amount: number;
     }[];
+    fee?: number;
+    feePayer?: string;
 }
 
 
@@ -205,6 +208,7 @@ export async function getTotalDripRewardsPaidInSol(distributorAddress: string): 
     let totalSol = 0;
     let before: string | null = null;
     while (true) {
+        // Fetch transactions for the recipient address
         const url = `https://api.helius.xyz/v0/addresses/${distributorAddress}/transactions?api-key=${HELIUS_API_KEY}${before ? `&before=${before}` : ''}`;
         const res = await fetch(url);
         if (!res.ok) {
@@ -216,17 +220,23 @@ export async function getTotalDripRewardsPaidInSol(distributorAddress: string): 
             }
             throw errorObj;
         }
-        const txs: any[] = await res.json();
+        const txs: HeliusEnhancedTransaction[] = await res.json();
 
         if (!txs.length) break;
         for (const tx of txs) {
+            let txSum = 0;
             if (tx.nativeTransfers) {
                 for (const transfer of tx.nativeTransfers) {
-                    if (transfer.fromUserAccount === DISTRIBUTOR_ADDRESS) {
-                        totalSol += transfer.amount / 1e9;
+                    if (transfer.fromUserAccount === DISTRIBUTOR_ADDRESS && transfer.toUserAccount === distributorAddress) {
+                        txSum += transfer.amount;
                     }
                 }
             }
+            // Deduct fee if recipient paid it
+            if (tx.feePayer === distributorAddress && typeof tx.fee === 'number') {
+                txSum -= tx.fee;
+            }
+            totalSol += txSum / 1e9;
         }
         before = txs[txs.length - 1].signature;
         if (txs.length < 100) break;

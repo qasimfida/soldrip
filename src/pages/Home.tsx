@@ -9,6 +9,7 @@ import Community from '@/components/community'
 import Insurance from '@/components/insurance'
 import RoadMap from '@/components/road-map'
 import JoinUs from '@/components/join-us'
+import Built from '@/components/built'
 
 const Home = () => {
     const location = useLocation();
@@ -33,6 +34,7 @@ const Home = () => {
             <Rewards />
             <Community />
             <Insurance />
+            <Built />
             <RoadMap />
             <JoinUs />
         </div>

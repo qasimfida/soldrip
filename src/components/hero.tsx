@@ -1,5 +1,6 @@
 import { Container } from '@/components/container'
 import SolDripIcon from '@/assets/logo-xl.svg'
+import CopyIcon from '@/assets/copy.svg'
 import { Button } from './ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import { ScrollDownIcon } from "@/components/icons"
@@ -8,7 +9,8 @@ import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
 
 const Hero = () => {
   const [isAnimated, setIsAnimated] = useState(false);
-
+  const [tooltip, setTooltip] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,6 +35,11 @@ const Hero = () => {
     window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
   }
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(DRIP_TOKEN_ADDRESS);
+    setIsCopied(true);
+  }
+
   return (
     <div className='flex flex-col items-center justify-center h-auto min-h-[780px]'>
       <Container className='flex flex-col gap-10 py-13'>
@@ -54,13 +61,21 @@ const Hero = () => {
           <Button onClick={handleBuyNow} className='text-xl bg-gradient-primary animate__animated animate__pulse animate__infinite animate__slow' size='lg'>
             Buy Now <ArrowRightIcon className='!w-6 !h-6' />
           </Button>
-          <ScrollDownIcon className="relative left-0 right-0 z-10 mx-auto transition-opacity cursor-pointer -bottom-3 hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
-          <input
-            readOnly
-            className="flex items-center justify-center h-12 max-w-full px-3 mt-2 text-sm font-medium text-center border rounded-lg border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
-            value={DRIP_TOKEN_ADDRESS}
-            placeholder="Enter wallet address"
-          />
+          <ScrollDownIcon className="relative right-0 left-0 -bottom-3 z-10 mx-auto transition-opacity cursor-pointer hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
+          <div
+            className="flex relative gap-6 items-center px-4 mt-2 max-w-full font-medium text-center rounded-full border h-13 border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
+
+          >
+            <div className='text-center w-[calc(100%-46px)]' >
+              <span className='text-gradient-primary text-[10px]' >Contract Address</span>
+              <span className='text-sm text-secondary line-clamp-1' >{DRIP_TOKEN_ADDRESS}</span>
+            </div>
+            <div className="relative">
+              <img src={CopyIcon} onMouseEnter={() => { setIsCopied(false); setTooltip(true) }} onMouseLeave={() => setTimeout(() => setTooltip(false), 1000)} alt="Copy" onClick={handleCopy} />
+              {tooltip && <div className='absolute -top-3 px-4 py-1 text-xs text-white rounded-full bg-black/80'>{isCopied ? "Copied" : "Copy"}</div>}
+            </div>
+
+          </div>
         </div>
       </Container>
     </div>
