@@ -61,9 +61,8 @@ const Hero = () => {
           <Button onClick={handleBuyNow} className='text-xl bg-gradient-primary animate__animated animate__pulse animate__infinite animate__slow' size='lg'>
             Buy Now <ArrowRightIcon className='!w-6 !h-6' />
           </Button>
-          <ScrollDownIcon className="relative right-0 left-0 -bottom-3 z-10 mx-auto transition-opacity cursor-pointer hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
           <div
-            className="flex relative gap-6 items-center px-4 mt-2 max-w-full font-medium text-center rounded-full border h-13 border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
+            className="flex relative gap-6 items-center px-4 mt-7 max-w-full font-medium text-center rounded-full border h-13 border-primary/20 w-md bg-primary/10 md:h-13 text-secondary md:text-base hover:animate__animated hover:animate__flash"
 
           >
             <div className='text-center w-[calc(100%-46px)]' >
@@ -76,6 +75,7 @@ const Hero = () => {
             </div>
 
           </div>
+          <ScrollDownIcon className="relative right-0 left-0 -bottom-4 z-10 mx-auto transition-opacity cursor-pointer hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
         </div>
       </Container>
     </div>
