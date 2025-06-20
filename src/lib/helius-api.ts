@@ -1,13 +1,8 @@
 import type { TokenHolderData, TokenSupply, HeliusApiResponse, TokenAccountsResult } from '@/types/helius';
 
 // Helius API configuration
-export const HELIUS_API_KEY = '782d4993-d148-432a-b92a-aa23f59d0077';
-const BASE_URL = 'https://mainnet.helius-rpc.com';
-
-// Token constants
-export const DRIP_TOKEN_ADDRESS = 'w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV';
-export const DISTRIBUTOR_ADDRESS = '9WiHZF9asn2k58mbXJaa9kxKzniW3jSyAoQiZAMciis';
-
+const env = import.meta.env;
+const { VITE_HELIUS_API_KEY, VITE_BASE_URL, VITE_DRIP_TOKEN_ADDRESS, VITE_DISTRIBUTOR_ADDRESS, VITE_SOLSCAN_API_KEY, VITE_HELIUS_API } = env
 
 
 export const getBalance = {
@@ -16,10 +11,9 @@ export const getBalance = {
     body: '{"jsonrpc":"2.0","id":"1","method":"getBalance","params":["83astBRguLMdt2h5U1Tpdq5tjFoJ6noeGwaY3mDLVcri"]}'
 };
 
-const HeliusAPI = 'https://api.helius.xyz/v0';
 
 
-
+console.log({ env })
 export interface HeliusEnhancedTransaction {
     signature: string;
     nativeTransfers?: {
@@ -38,7 +32,7 @@ export async function getAllTokenHolders(): Promise<TokenHolderData[]> {
         let cursor: string | null = null;
 
         do {
-            const response: Response = await fetch(`${BASE_URL}/?api-key=${HELIUS_API_KEY}`, {
+            const response: Response = await fetch(`${VITE_BASE_URL}/?api-key=${VITE_HELIUS_API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +42,7 @@ export async function getAllTokenHolders(): Promise<TokenHolderData[]> {
                     id: '1',
                     method: 'getTokenAccounts',
                     params: {
-                        mint: DRIP_TOKEN_ADDRESS,
+                        mint: VITE_DRIP_TOKEN_ADDRESS,
                         cursor: cursor
                     },
                 }),
@@ -80,7 +74,7 @@ export async function getAllTokenHolders(): Promise<TokenHolderData[]> {
 
 export async function getAccountInfo(address: string): Promise<TokenSupply | null> {
     try {
-        const response = await fetch(`${BASE_URL}/?api-key=${HELIUS_API_KEY}`, {
+        const response = await fetch(`${VITE_BASE_URL}/?api-key=${VITE_HELIUS_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,7 +90,6 @@ export async function getAccountInfo(address: string): Promise<TokenSupply | nul
         const data = await response.json();
 
         if (!data.result) {
-            // Try alternative method using DAS API
             return await getTokenSupplyFromDAS(address);
         }
 
@@ -106,14 +99,13 @@ export async function getAccountInfo(address: string): Promise<TokenSupply | nul
         }
     } catch (error) {
         console.error('Error fetching token supply:', error);
-        // Fallback to DAS API
         return await getTokenSupplyFromDAS(address);
     }
 }
 
 async function getTokenSupplyFromDAS(address: string): Promise<TokenSupply | null> {
     try {
-        const response = await fetch(`${HeliusAPI}/token-metadata?api-key=${HELIUS_API_KEY}`, {
+        const response = await fetch(`${VITE_HELIUS_API}/token-metadata?api-key=${VITE_HELIUS_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -134,17 +126,15 @@ async function getTokenSupplyFromDAS(address: string): Promise<TokenSupply | nul
             return null;
         }
 
-        // Extract supply from the response format you provided
         const accountInfo = data[0].onChainAccountInfo.accountInfo;
         const supply = accountInfo.data.parsed.info.supply;
 
-        // Convert supply to number (considering decimals)
         const decimals = accountInfo.data.parsed.info.decimals || 9;
         const totalSupply = Number(supply) / Math.pow(10, decimals);
 
         return {
             total: totalSupply,
-            circulating: totalSupply, // Assuming all tokens are circulating
+            circulating: totalSupply,
         };
     } catch (error) {
         console.error('Error fetching token supply from DAS:', error);
@@ -154,13 +144,13 @@ async function getTokenSupplyFromDAS(address: string): Promise<TokenSupply | nul
 
 export async function getTokenSolVolume(): Promise<number> {
     try {
-        const response = await fetch(`${HeliusAPI}/token-metadata?api-key=${HELIUS_API_KEY}`, {
+        const response = await fetch(`${VITE_HELIUS_API}/token-metadata?api-key=${VITE_HELIUS_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                mintAccounts: [DRIP_TOKEN_ADDRESS],
+                mintAccounts: [VITE_DRIP_TOKEN_ADDRESS],
                 includeOffChain: true,
                 disableCache: false,
             }),
@@ -204,42 +194,45 @@ export async function getTotalDistributedAmount(
     return dailyVolume * revSharePercentage;
 }
 
-export async function getTotalDripRewardsPaidInSol(distributorAddress: string): Promise<number> {
+export async function getTotalSolReceived(address: string): Promise<number> {
     let totalSol = 0;
-    let before: string | null = null;
-    while (true) {
-        // Fetch transactions for the recipient address
-        const url = `https://api.helius.xyz/v0/addresses/${distributorAddress}/transactions?api-key=${HELIUS_API_KEY}${before ? `&before=${before}` : ''}`;
-        const res = await fetch(url);
-        if (!res.ok) {
-            let errorObj;
-            try {
-                errorObj = await res.json();
-            } catch {
-                errorObj = { status: res.status, statusText: res.statusText };
-            }
-            throw errorObj;
-        }
-        const txs: HeliusEnhancedTransaction[] = await res.json();
+    let page = 1;
+    const PAGE_SIZE = 100;
 
-        if (!txs.length) break;
-        for (const tx of txs) {
-            let txSum = 0;
-            if (tx.nativeTransfers) {
-                for (const transfer of tx.nativeTransfers) {
-                    if (transfer.fromUserAccount === DISTRIBUTOR_ADDRESS && transfer.toUserAccount === distributorAddress) {
-                        txSum += transfer.amount;
-                    }
+    try {
+        while (true) {
+            const url = `https://pro-api.solscan.io/v2.0/account/transfer?address=${address}&page=${page}&page_size=${PAGE_SIZE}&sort_by=block_time&sort_order=desc&remove_spam=true&exclude_amount_zero=true&token=So11111111111111111111111111111111111111111`;
+
+            const requestOptions = {
+                method: "GET",
+                headers: { "token": VITE_SOLSCAN_API_KEY }
+            };
+
+            const response = await fetch(url, requestOptions);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch data from Solscan Pro API');
+            }
+
+            const data = await response.json();
+
+            if (!data.data || data.data.length === 0) break;
+
+            for (const tx of data.data) {
+                if (tx.flow === "in" && tx.from_address === VITE_DISTRIBUTOR_ADDRESS && tx.to_address === address) {
+                    const actualAmount = tx.amount / Math.pow(10, tx.token_decimals);
+                    totalSol += actualAmount;
                 }
             }
-            // Deduct fee if recipient paid it
-            if (tx.feePayer === distributorAddress && typeof tx.fee === 'number') {
-                txSum -= tx.fee;
-            }
-            totalSol += txSum / 1e9;
+
+            if (data.data.length < PAGE_SIZE) break;
+
+            page++;
         }
-        before = txs[txs.length - 1].signature;
-        if (txs.length < 100) break;
+
+        return totalSol;
+    } catch (error) {
+        console.error('Error fetching Solscan Pro data:', error);
+        throw new Error('Failed to fetch transaction data from Solscan Pro API');
     }
-    return totalSol;
 }

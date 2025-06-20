@@ -6,7 +6,7 @@ import { Container } from "@/components/container";
 import { NAVIGATION } from "@/constants/navigation";
 import type { Navigation } from "@/types/navigations";
 import { Link, useLocation } from "react-router-dom";
-import { DRIP_TOKEN_ADDRESS } from "@/lib/helius-api";
+const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export function Header() {
   };
 
   const handleBuyNow = () => {
-    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
+    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${VITE_DRIP_TOKEN_ADDRESS}`, '_blank');
   };
 
   const toggleMenu = () => {
@@ -41,7 +41,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       {/* Desktop Header */}
-      <Container className="items-center justify-between hidden py-7 md:flex">
+      <Container className="hidden justify-between items-center py-7 md:flex">
         <Link to="/" className="flex items-center">
           <img src={SolDripIcon} alt="SolDrip logo" />
         </Link>
@@ -64,7 +64,7 @@ export function Header() {
 
       {/* Mobile Header */}
       <div className="md:hidden">
-        <Container className="flex items-center justify-between py-7">
+        <Container className="flex justify-between items-center py-7">
           <Link to="/" className="flex items-center">
             <img src={SolDripIcon} alt="SolDrip logo" />
           </Link>
@@ -80,7 +80,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="absolute w-full h-auto px-4 py-6 border-y bg-background border-border/20">
+          <div className="absolute px-4 py-6 w-full h-auto border-y bg-background border-border/20">
             <nav className="flex flex-col space-y-4">
               {NAVIGATION.map((item: Navigation) => (
                 <Link

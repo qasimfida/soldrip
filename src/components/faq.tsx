@@ -6,7 +6,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 import TelegramIcon from './icons/telegram-icon'
-import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
+const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
+
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -41,7 +42,7 @@ const FAQ = () => {
     {
       question: "How are distributions calculated?",
       answer: <>
-        There are one of two ways rewards can be calculated. You can verify how the method is used by checking the <a href={`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`} target='_blank' className='text-primary'>REVSHARE token page</a>.
+        There are one of two ways rewards can be calculated. You can verify how the method is used by checking the <a href={`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`} target='_blank' className='text-primary'>REVSHARE token page</a>.
         <br />
         <br />
         The first method is through a proportional distribution method by which every eligible wallet is given its proportional share of the SOL being distributed during that interval.
@@ -111,16 +112,16 @@ const FAQ = () => {
         </Container>
       </div >
       <Container>
-        <div className="max-w-3xl mx-auto mt-16 space-y-6 md:space-y-8 md:mt-12">
+        <div className="mx-auto mt-16 space-y-6 max-w-3xl md:space-y-8 md:mt-12">
           {faqItems.map((item, index) => (
             <div
               key={index}
-              className="px-3 py-5 overflow-hidden border rounded-lg bg-primary/10 border-primary/20 shadow-primary md:px-13 md:py-4"
+              className="overflow-hidden px-3 py-5 rounded-lg border bg-primary/10 border-primary/20 shadow-primary md:px-13 md:py-4"
             >
               <div
                 onClick={() => toggleAccordion(index)}
                 className={cn(
-                  "w-full flex items-center justify-between  text-left transition-colors"
+                  "flex justify-between items-center w-full text-left transition-colors"
                 )}
               >
                 <h3 className="pr-4 text-base font-bold text-white md:text-xl">{item.question}</h3>
@@ -147,11 +148,11 @@ const FAQ = () => {
           ))}
         </div>
       </Container>
-      <Container className="relative max-w-4xl mx-auto my-16 md:my-17 lg:px-12 ">
+      <Container className="relative mx-auto my-16 max-w-4xl md:my-17 lg:px-12">
 
-        <div className="relative px-4 overflow-hidden bg-cover border rounded-lg no-repeat shadow-primary border-primary/20 py-7 md:px-13 md:py-15" style={{ backgroundImage: `url(${FaqBg})` }} >
+        <div className="overflow-hidden relative px-4 py-7 bg-cover rounded-lg border no-repeat shadow-primary border-primary/20 md:px-13 md:py-15" style={{ backgroundImage: `url(${FaqBg})` }} >
 
-          <div className="absolute top-0 left-0 z-0 w-full h-full bg-black/40 "></div>
+          <div className="absolute top-0 left-0 z-0 w-full h-full bg-black/40"></div>
           <div className='relative z-10'>
             <h4 className='text-[32px] font-bold text-center text-white mb-2.5'>Do you need additional assistance</h4>
             <p className="mt-3 text-center text-gray-200">Here are answers to our most common questions. If your questions are not addressed here, please visit our Telegram group and ask the community. </p>

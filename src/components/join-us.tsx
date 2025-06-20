@@ -10,20 +10,20 @@ import net from "@/assets/social/net.svg"
 import rabbit from "@/assets/social/rabbit.svg"
 import coingecko from "@/assets/social/coingecko.svg"
 import CopyIcon from '@/assets/copy.svg'
-import { DRIP_TOKEN_ADDRESS } from "@/lib/helius-api"
 import { useState } from "react"
+const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
 
 const JoinUs = () => {
     const [tooltip, setTooltip] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(DRIP_TOKEN_ADDRESS);
+        navigator.clipboard.writeText(VITE_DRIP_TOKEN_ADDRESS);
         setIsCopied(true);
     }
 
     const handleBuyNow = () => {
-        window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
+        window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${VITE_DRIP_TOKEN_ADDRESS}`, '_blank');
     }
     return (
         <section id="features" className="pt-26 -mt-26" >
@@ -40,7 +40,7 @@ const JoinUs = () => {
                     >
                         <div className='text-center w-[calc(100%-46px)]' >
                             <span className='text-gradient-primary text-[10px]' >Contract Address</span>
-                            <span className='text-sm text-secondary line-clamp-1' >{DRIP_TOKEN_ADDRESS}</span>
+                            <span className='text-sm text-secondary line-clamp-1' >{VITE_DRIP_TOKEN_ADDRESS}</span>
                         </div>
                         <div className="relative">
                             <img src={CopyIcon} onMouseEnter={() => { setIsCopied(false); setTooltip(true) }} onMouseLeave={() => setTimeout(() => setTooltip(false), 1000)} alt="Copy" onClick={handleCopy} />

@@ -10,7 +10,9 @@ import Logo from "@/assets/logo-circle.svg"
 import { useState } from "react"
 import { formatCurrency } from "@/lib/utils"
 import { useWallet } from "@/contexts/wallet"
-import { DRIP_TOKEN_ADDRESS, getTotalDripRewardsPaidInSol } from '@/lib/helius-api';
+import { getTotalSolReceived } from '@/lib/helius-api';
+const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
+
 
 const Rewards = () => {
     // const [openCalculator, setOpenCalculator] = useState(false)
@@ -28,7 +30,8 @@ const Rewards = () => {
 
             setIsLoading(true);
             setErrorMessage(null);
-            const res = await getTotalDripRewardsPaidInSol(address);
+
+            const res = await getTotalSolReceived(address)
             if ((res as any)?.error) {
                 setErrorMessage((res as any)?.error?.message || 'Error fetching rewards data. Please try again.');
                 return;
@@ -57,11 +60,11 @@ const Rewards = () => {
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
                     <div className="flex flex-col gap-8 justify-center items-center md:flex-row">
                         {/* <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
-                        <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
+                        <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
                         <Button
                             size="lg"
                             className="px-7 text-xl font-semibold bg-gradient-secondary shadow-primary"
-                            onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}
+                            onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Distribution History
                         </Button>
@@ -69,7 +72,7 @@ const Rewards = () => {
                     <Button
                         size="lg"
                         className="flex px-7 mx-auto text-xl font-semibold mt-13 bg-gradient-danger shadow-primary"
-                        onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}
+                        onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}
                     >
                         Rewards and Tokenomics
                     </Button>

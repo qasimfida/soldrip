@@ -15,7 +15,7 @@ export const ROAD_MAP: RoadmapItem[] = [
     {
 
         left: [
-            "Establish an ecosystem of gamingand utility apps powered by $DRIP",
+            "Establish an ecosystem of gaming and utility apps powered by $DRIP",
             "Achieve a $1M market cap"
         ],
         right: [

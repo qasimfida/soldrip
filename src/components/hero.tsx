@@ -5,7 +5,7 @@ import { Button } from './ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import { ScrollDownIcon } from "@/components/icons"
 import { useEffect, useState } from 'react'
-import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
+const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
 
 const Hero = () => {
   const [isAnimated, setIsAnimated] = useState(false);
@@ -32,11 +32,11 @@ const Hero = () => {
   };
 
   const handleBuyNow = () => {
-    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${DRIP_TOKEN_ADDRESS}`, '_blank');
+    window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${VITE_DRIP_TOKEN_ADDRESS}`, '_blank');
   }
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(DRIP_TOKEN_ADDRESS);
+    navigator.clipboard.writeText(VITE_DRIP_TOKEN_ADDRESS);
     setIsCopied(true);
   }
 
@@ -67,7 +67,7 @@ const Hero = () => {
           >
             <div className='text-center w-[calc(100%-46px)]' >
               <span className='text-gradient-primary text-[10px]' >Contract Address</span>
-              <span className='text-sm text-secondary line-clamp-1' >{DRIP_TOKEN_ADDRESS}</span>
+              <span className='text-sm text-secondary line-clamp-1' >{VITE_DRIP_TOKEN_ADDRESS}</span>
             </div>
             <div className="relative">
               <img src={CopyIcon} onMouseEnter={() => { setIsCopied(false); setTooltip(true) }} onMouseLeave={() => setTimeout(() => setTooltip(false), 1000)} alt="Copy" onClick={handleCopy} />
