@@ -57,7 +57,7 @@ const Rewards = () => {
                     <p className="mt-4 mb-8 text-base text-center text-white md:text-3xl">Built for <span className="text-secondary" >Diamond Hands</span></p>
                     <div className="flex flex-col gap-8 justify-center items-center md:flex-row">
                         {/* <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
-                        <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Token Details</Button>
+                        <Button size="lg" className="px-7 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => window.open(`http://revshare.dev/token-landing/${DRIP_TOKEN_ADDRESS}`, '_blank')}>Rewards Calculator</Button>
                         <Button
                             size="lg"
                             className="px-7 text-xl font-semibold bg-gradient-secondary shadow-primary"

@@ -3,7 +3,7 @@ import SolDripIcon from '@/assets/logo-xl.svg'
 import CopyIcon from '@/assets/copy.svg'
 import { Button } from './ui/button'
 import { ArrowRightIcon } from 'lucide-react'
-import { ScrollDownIcon } from "@/components/icons"
+import  ScrollDown  from "@/assets/social/swipe-down-new.svg"
 import { useEffect, useState } from 'react'
 import { DRIP_TOKEN_ADDRESS } from '@/lib/helius-api'
 
@@ -75,7 +75,12 @@ const Hero = () => {
             </div>
 
           </div>
-          <ScrollDownIcon className="relative right-0 left-0 -bottom-4 z-10 mx-auto transition-opacity cursor-pointer hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" onClick={scrollToContent} />
+
+          <img
+          src={ScrollDown}
+  alt="Scroll Down"
+           className="relative mt-[12px] right-0 left-0 -bottom-4 z-10 mx-auto transition-opacity cursor-pointer hover:opacity-80 animate__animated animate__bounce animate__infinite animate__slow" 
+           onClick={scrollToContent} />
         </div>
       </Container>
     </div>
