@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getAllTokenHolders, getAccountInfo, getTokenSolVolume, getTotalDistributedAmount, DRIP_TOKEN_ADDRESS } from '@/lib/helius-api';
+import { getAllTokenHolders, getAccountInfo, getTokenSolVolume, getTotalDistributedAmount } from '@/lib/helius-api';
 import { formatCurrency } from '@/lib/utils';
 import { Button } from './ui/button';
 import Title from './title';
+const DRIP_TOKEN_ADDRESS = import.meta.env.VITE_DRIP_TOKEN_ADDRESS
 
 interface RewardsCalculatorProps {
     open: boolean;
@@ -101,9 +102,9 @@ const RewardsCalculator = ({ open, onClose }: RewardsCalculatorProps) => {
 
     if (!open) return null;
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70">
+        <div className="flex fixed inset-0 z-50 justify-center items-center p-6 bg-black/70">
             <div className="relative flex flex-col gap-5 w-auto max-w-[744px] border border-primary/20 bg-[#202738] rounded-xl shadow-primary overflow-hidden px-3 md:px-13 py-10 md:py-7">
-                <div className="relative flex items-center justify-between">
+                <div className="flex relative justify-between items-center">
                     {rewards !== null ? (
                         <p className="w-full text-lg text-center text-white">
                             You will earn
@@ -114,7 +115,7 @@ const RewardsCalculator = ({ open, onClose }: RewardsCalculatorProps) => {
                         </Title>
                     )}
                     <div
-                        className="absolute top-0 text-xl font-bold text-white transition-colors cursor-pointer hover:text-gray-300 right-3"
+                        className="absolute top-0 right-3 text-xl font-bold text-white transition-colors cursor-pointer hover:text-gray-300"
                         onClick={onClose}
                     >
                         x
@@ -155,16 +156,16 @@ const RewardsCalculator = ({ open, onClose }: RewardsCalculatorProps) => {
                         </>
 
                     ) : (
-                        <div className="flex flex-col items-center gap-4 py-4">
-                            <div className="grid w-full gap-4">
-                                <div className="flex flex-col items-center justify-center">
+                        <div className="flex flex-col gap-4 items-center py-4">
+                            <div className="grid gap-4 w-full">
+                                <div className="flex flex-col justify-center items-center">
                                     <Title className="text-xl font-bold text-center text-gradient-primary">
                                         {formatCurrency(rewards.dailySOL)} SOL
                                     </Title>
                                 </div>
                             </div>
 
-                            <p className="text-xl text-center text-white ">
+                            <p className="text-xl text-center text-white">
                                 Every 24 Hours
                             </p>
                         </div>
