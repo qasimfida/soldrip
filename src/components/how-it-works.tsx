@@ -6,7 +6,7 @@ import Thumbnail from "@/assets/thumbnails/How It Works.png"
 const HowItWorks = () => {
   return (
     <section id="how-it-works" className="pt-26 -mt-26"   >
-      <Container size="md" className="py-16" >
+      <Container size="md" className="pb-16" >
         <Title>
           How It Works
         </Title>
