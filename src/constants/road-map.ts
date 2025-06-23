@@ -8,8 +8,8 @@ export const ROAD_MAP: RoadmapItem[] = [
             "Secure listings on token screeners and websites"
         ],
         left: [
-            "Community growth initiatives",
-            "Community growth initiatives"
+            "Launch on REVSHARE",
+            "Achieve a $100,000 market cap"
         ],
     },
     {
