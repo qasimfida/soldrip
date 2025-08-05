@@ -12,7 +12,7 @@ export const WHY_DRIP = [
     },
     {
         title: "Rewards for All",
-        description: "69% of every reward is dropped to holders with at least 100,000 $DRIP tokens in their wallet.",
+        description: "69% of every reward is dropped to holders with at least 250,000 $DRIP tokens in their wallet.",
         icon: EmojiIcon,
     },
     {
