@@ -1,6 +1,5 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Header } from "@/components/header"
 import FAQPage from './pages/FAQ'
 import { WalletProvider } from './contexts/wallet'
 import Proof from './pages/Proof'

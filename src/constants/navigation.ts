@@ -2,8 +2,8 @@ import type { Navigation } from "@/types/navigations";
 
 export const NAVIGATION: Navigation[] = [
   {
-    label: "Features",
-    href: "/#features",
+    label: "Why DRIP",
+    href: "/#why_drip",
   },
   {
     label: "Tokenomics",

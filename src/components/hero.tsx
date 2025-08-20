@@ -51,7 +51,7 @@ const Hero = ({ title, gradientText, description, buttonText, onClick, hasAddres
           </Button>
           {hasAddress && (
             <div className="h-16 gradient-border">
-              <div className="flex relative items-center max-w-full font-medium leading-4 text-center gradient-border-inner gradient-border text-secondary md:text-base hover:animate__animated hover:animate__flash">
+              <div className="flex relative flex-col items-center max-w-full font-medium leading-4 text-center gradient-border-inner gradient-border text-secondary md:text-base hover:animate__animated hover:animate__flash">
                 <span className='text-gradient-primary text-[10px] inline-block mb-1 roboto' >Contract Address</span>
                 <div className="flex relative gap-3">
                   <span className='text-xs text-white line-clamp-1 roboto-500' >{VITE_DRIP_TOKEN_ADDRESS}</span>

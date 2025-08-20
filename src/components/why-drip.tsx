@@ -7,7 +7,7 @@ import type { WhyDripProps } from "@/types/why-drip"
 
 const WhyDrip = ({ options, title, highlight, description }: WhyDripProps) => {
     return (
-        <section id="features" className="overflow-hidden pt-26 -mt-26">
+        <section id="why_drip" className="overflow-hidden pt-26 -mt-26">
             <Container className="relative z-10 pt-12 pb-[120px]" >
                 <div className="flex flex-col gap-4">
                     <Title highlight={highlight}>
