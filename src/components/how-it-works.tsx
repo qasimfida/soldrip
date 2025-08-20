@@ -26,7 +26,7 @@ const HowItWorks = () => {
     <section id="how-it-works" className="pt-26 -mt-26"   >
       <Container size="md" className="pt-8 pb-12" >
         <div className="flex justify-center">
-          <div className="overflow-hidden relative mt-4 w-full secondary-gradient-border">
+          <div className="inline-flex overflow-hidden relative justify-center items-center mt-4 w-full secondary-gradient-border">
             <div className="secondary-gradient-border-inner">
               <div className="relative aspect-video">
                 <video

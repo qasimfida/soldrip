@@ -120,9 +120,9 @@ const Rewards = () => {
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex flex-col items-center justify-center  rounded-[24px] bg-gradient-primary p-[1px] max-w-[544px] w-full h-auto">
-                                <div className="flex flex-col items-center p-10 rounded-[24px] bg-[#030014] h-full w-full">
-                                    <Title type="heading" className="" highlight="Check My" >
+                            <div className="flex flex-col items-center justify-center  rounded-[24px] bg-gradient-primary py-[2px] max-w-[544px] w-full h-auto">
+                                <div className="inline-flex flex-col items-center p-10 rounded-[24px] bg-[#030014] h-[calc(100%-2px)] w-[calc(100%-2px)]  max-w-[calc(100%-2px)] max-h-[calc(100%-2px)]">
+                                    <Title type="heading" className="" highlight="Check My " >
                                         Rewards
                                     </Title>
 
@@ -131,7 +131,7 @@ const Rewards = () => {
                                             <p className="flex items-center text-sm text-white md:text-base">
                                                 Enter your wallet address to see total $DRIP rewards paid in SOL!
                                             </p>
-                                            <div className="relative mt-8 mb-10 w-full h-15 gradient-border">
+                                            <div className="relative mt-8 mb-10 w-full h-15 gradient-border p-[1px]">
                                                 <div className="w-full h-15 gradient-border-inner">
                                                     <input
                                                         type="text"

@@ -25,7 +25,7 @@ const Experience = () => {
     }, [location.hash]);
 
     return (
-        <div className="relative min-h-screen text-white">
+        <main className="relative min-h-screen text-white">
             <Hero title="Experience Utility " gradientText="in Motion" description="A live, on-chain experiment testing how blockchain rewards can drive lasting community engagement." footer="Secure swap powered by Jupiter Exchange" buttonText="Swap $SOL for DRIP Now" />
             <div className="pt-8 pb-5">
                 <Ecosystem description="" title="growing ecosystem" highlight="part of a " />
@@ -40,7 +40,7 @@ const Experience = () => {
                     </h4>
                 </div>
             </div>
-        </div>
+        </main>
     )
 }
 

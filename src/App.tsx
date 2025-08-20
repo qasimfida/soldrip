@@ -13,10 +13,9 @@ const App = () => {
   return (
     <WalletProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen bg-background text-foreground">
+        <div className="overflow-hidden relative min-h-screen bg-background text-foreground">
           <img src={bg} className='block object-cover absolute right-0 left-0 top-20 mx-auto md:top-0' />
           <div className="relative z-10 gradient-bottom-border">
-            <Header />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/proof" element={<Proof />} />

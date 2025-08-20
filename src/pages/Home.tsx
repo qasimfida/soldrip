@@ -14,6 +14,7 @@ import Ecosystem from '@/components/ecosystem'
 import { WHY_DRIP } from '@/constants/why-drip'
 import Footer from '@/components/footer'
 import Drop from "@/assets/bg-gradient.png"
+import { Header } from '@/components/header'
 
 
 const Home = () => {
@@ -32,24 +33,27 @@ const Home = () => {
     }, [location.hash]);
 
     return (
-        <div className="min-h-screen text-white">
-            <Hero title="Finally… " gradientText="A Memecoin That Pays You to Hold" hasAddress description="Tired of chasing the next pump-and-dump? With Sol Drip, you earn real $SOL at steady intervals — rewards fueled by actual trading volume, not empty promises. Built for long-term holders with rug-pull protection, a die-hard community, and a growing ecosystem that drives demand and price upward." buttonText="Swap $SOL for DRIP Now" />
-            <HowItWorks />
-            <div className="flex absolute z-0 justify-center items-center min-w-full">
-                <img src={Drop} alt="background" className="block object-cover min-w-full" />
-            </div>
-            <div className="relative z-10">
-                <Ecosystem description="We continuously forge relationships in the web3 community" title="growing ecosystem" highlight="part of a " />
-                <WhyDrip options={WHY_DRIP} title="Drip" highlight="Why" description="Pockets stay full, even when the market flushes" />
-                <Rewards />
-                <Community />
-                <RoadMap />
-                <Insurance />
-                <Built />
-                <JoinUs />
-                <Footer />
-            </div>
-        </div>
+        <>
+            <Header />
+            <main className="min-h-screen text-white">
+                <Hero title="Finally… " gradientText="A Memecoin That Pays You to Hold" hasAddress description="Tired of chasing the next pump-and-dump? With Sol Drip, you earn real $SOL at steady intervals — rewards fueled by actual trading volume, not empty promises. Built for long-term holders with rug-pull protection, a die-hard community, and a growing ecosystem that drives demand and price upward." buttonText="Swap $SOL for DRIP Now" />
+                <HowItWorks />
+                <div className="flex absolute z-0 justify-center items-center min-w-full">
+                    <img src={Drop} alt="background" className="block object-cover min-w-full" />
+                </div>
+                <div className="relative z-10">
+                    <Ecosystem description="We continuously forge relationships in the web3 community" title="growing ecosystem" highlight="part of a " />
+                    <WhyDrip options={WHY_DRIP} title="Drip" highlight="Why" description="Pockets stay full, even when the market flushes" />
+                    <Rewards />
+                    <Community />
+                    <RoadMap />
+                    <Insurance />
+                    <Built />
+                    <JoinUs />
+                </div>
+            </main>
+            <Footer />
+        </>
     )
 }
 

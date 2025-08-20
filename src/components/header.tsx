@@ -8,7 +8,7 @@ import type { Navigation } from "@/types/navigations";
 import { Link, useLocation } from "react-router-dom";
 const { VITE_DRIP_TOKEN_ADDRESS } = import.meta.env;
 
-export function Header() {
+export function Header({ hasBuyButton = true, hasNavigation = true }: { hasBuyButton?: boolean, hasNavigation?: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -30,8 +30,6 @@ export function Header() {
     }
   };
 
-
-  const hideNavigation = location.pathname === '/experience'
   const handleBuyNow = () => {
     window.open(`https://jup.ag/swap/So11111111111111111111111111111111111111112-${VITE_DRIP_TOKEN_ADDRESS}`, '_blank');
   };
@@ -49,7 +47,7 @@ export function Header() {
           <img src={SolDripIcon} alt="SolDrip logo" />
         </Link>
         {
-          !hideNavigation && (<nav className="flex items-center space-x-5">
+          hasNavigation && (<nav className="flex items-center space-x-5">
             {NAVIGATION.map((item: Navigation) => (
               <Link
                 to={item.href}
@@ -62,10 +60,13 @@ export function Header() {
             ))}
           </nav>)
         }
-
-        <Button onClick={handleBuyNow} className="font-semibold rounded-[24px] transition-opacity px-5 bg-gradient-primary hover:opacity-90">
-          Buy Now
-        </Button>
+        {
+          hasBuyButton && (
+            <Button onClick={handleBuyNow} className="font-semibold rounded-[24px] transition-opacity px-5 bg-gradient-primary hover:opacity-90">
+              Buy Now
+            </Button>
+          )
+        }
       </Container>
 
       {/* Mobile Header */}
@@ -88,7 +89,7 @@ export function Header() {
         {mobileMenuOpen && (
           <div className="absolute px-4 py-6 w-full h-auto border-y bg-background border-border/20">
             <nav className="flex flex-col space-y-4">
-              {!hideNavigation && NAVIGATION.map((item: Navigation) => (
+              {hasNavigation && NAVIGATION.map((item: Navigation) => (
                 <Link
                   to={item.href}
                   key={item.label}
@@ -98,9 +99,13 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Button onClick={handleBuyNow} className="w-full font-semibold rounded-full transition-opacity bg-gradient-primary hover:opacity-90">
-                Buy Now
-              </Button>
+              {
+                hasBuyButton && (
+                  <Button onClick={handleBuyNow} className="w-full font-semibold rounded-full transition-opacity bg-gradient-primary hover:opacity-90">
+                    Buy Now
+                  </Button>
+                )
+              }
             </nav>
           </div>
         )}
