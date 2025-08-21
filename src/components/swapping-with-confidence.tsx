@@ -69,7 +69,7 @@ const SwapButton = ({ onClick, loading, disabled, children }: SwapButtonProps) =
         disabled={loading || disabled}
         className="block right-0 left-0 px-8 mx-auto w-full text-xl font-semibold rounded-full bg-gradient-primary md:px-12 shadow-primary"
     >
-        {loading ? 'Swapping...' : children}
+        {loading ? 'Loading...' : children}
     </Button>
 );
 
@@ -254,7 +254,7 @@ const SwapeWithConfidence = () => {
 
     return (
         <section id="swapping-confidence" className="mb-16 md:mb-20 pt-26 -mt-26">
-            <Container className="py-11 md:py-18">
+            <Container className="py-1">
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
                     <div className="flex flex-col gap-5">
                         <h1 className=" font-bold  uppercase text-uppercase text-xl leading-13 md:text-[32px]">
@@ -294,7 +294,7 @@ const SwapeWithConfidence = () => {
                                 </div>
                                 {wallet.connected ? (
                                     <SwapButton onClick={signAndSendTransaction} loading={loading} disabled={fromAmount <= 0 || !quoteResponse}>
-                                        {!loading ? "Swap" : "Loading"}
+                                        Swap
                                     </SwapButton>
                                 ) : (
                                     <Button

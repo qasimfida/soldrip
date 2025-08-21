@@ -3,7 +3,7 @@ import { SWAPPING_STEPS } from "../constants/swapping";
 
 const Swapping = () => {
   return (
-    <section id="swapping" className="mb-16 md:mb-20 pt-26 -mt-26">
+    <section id="swapping" className="pt-26 -mt-26">
       <div className="">
         <Container className="py-11 md:py-20">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2  max-w-[884px] mx-auto">

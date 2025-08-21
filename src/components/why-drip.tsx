@@ -27,8 +27,8 @@ const WhyDrip = ({ options, title, highlight, description }: WhyDripProps) => {
                                     <div className="overflow-hidden relative mt-12  rounded-2xl h-[208px] w-[380px] ">
                                         <img src={Background} alt="background" className="object-cover absolute bottom-0 left-0 z-0 w-full h-full" />
                                         <div className="relative z-10 p-4 pt-14 pb-8 h-full">
-                                            <Title highlight="Why" type="heading" className="mb-2 text-center uppercase md:text-2xl">
-                                                Drip
+                                            <Title highlight={item.highlight} type="heading" className="mb-2 text-center uppercase md:text-2xl">
+                                                {" "}{item.title}
                                             </Title>
                                             <p className=" text-center text-[#F3F3F5] roboto text-lg">
                                                 {item.description}
