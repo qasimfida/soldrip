@@ -11,7 +11,7 @@ const WhyDrip = ({ options, title, highlight, description }: WhyDripProps) => {
             <Container className="relative z-10 pt-12 pb-[120px]" >
                 <div className="flex flex-col gap-4">
                     <Title highlight={highlight}>
-                        {title}
+                        {" "}{title}
                     </Title>
                     <p className="text-base font-normal text-center text-white md:text-xl">{description}</p>
                 </div>
