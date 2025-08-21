@@ -3,7 +3,7 @@ declare global {
 }
 import { useEffect, useState, useCallback } from "react";
 import { Container } from "./container";
-import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
+import { Connection, VersionedTransaction } from '@solana/web3.js';
 import { Buffer } from 'buffer';
 import { Button } from "./ui/button";
 import SwapIcon from "./icons/swap-icon";
@@ -20,7 +20,21 @@ const TOKENS = [
     SOL_DRIP_MINT
 ]
 
-const TokenSelect = ({ options, value, setValue, disabled }: any) => (
+// Asset type for Solana tokens
+interface SolanaAsset {
+    id: string;
+    name: string;
+    symbol: string;
+    decimals: number;
+    [key: string]: any; // for extra fields from API
+}
+
+const TokenSelect = ({ options, value, setValue, disabled }: {
+    options?: SolanaAsset[];
+    value: SolanaAsset | null;
+    setValue: (asset: SolanaAsset) => void;
+    disabled?: boolean;
+}) => (
     <Select options={options} value={value} setValue={setValue} disabled={disabled} />
 );
 
@@ -60,25 +74,26 @@ const SwapButton = ({ onClick, loading, disabled, children }: SwapButtonProps) =
 );
 
 const SwapeWithConfidence = () => {
-    const [fromAsset, setFromAsset] = useState(null);
-    const [toAsset, setToAsset] = useState(null);
-    const [fromAmount, setFromAmount] = useState(0);
-    const [toAmount, setToAmount] = useState(0);
-    const [quoteResponse, setQuoteResponse] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [direction, setDirection] = useState("up");
+    const [fromAsset, setFromAsset] = useState<SolanaAsset | null>(null);
+    const [toAsset, setToAsset] = useState<SolanaAsset | null>(null);
+    const [fromAmount, setFromAmount] = useState<number>(0);
+    const [toAmount, setToAmount] = useState<number>(0);
+    const [quoteResponse, setQuoteResponse] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [direction, setDirection] = useState<'up' | 'down'>('up');
     const { setVisible } = useWalletModal();
 
-    const [assets, setAssets] = useState<any[]>([]);
-    const [error, setError] = useState<any>(null);
+    const [assets, setAssets] = useState<SolanaAsset[]>([]);
+    const [error, setError] = useState<Error | null>(null);
+    console.log({ error })
 
     useEffect(() => {
         async function fetchSolanaAssets() {
             try {
-                const allAssets: any[] = [];
+                const allAssets: SolanaAsset[] = [];
                 await Promise.all(TOKENS.map(async (token) => {
                     const res = await fetch(`https://datapi.jup.ag/v1/assets/search?query=${token}`);
-                    const response = await res.json();
+                    const response: SolanaAsset[] = await res.json();
                     allAssets.push(response[0]);
                 }))
 
@@ -86,7 +101,7 @@ const SwapeWithConfidence = () => {
                 setFromAsset(allAssets[0]);
                 setToAsset(allAssets[1]);
             } catch (err) {
-                setError(err);
+                setError(err instanceof Error ? err : new Error(String(err)));
             } finally {
                 setLoading(false);
             }
@@ -99,10 +114,10 @@ const SwapeWithConfidence = () => {
     );
 
 
-    const handleFromAssetChange = async (asset) => {
+    const handleFromAssetChange = (asset: SolanaAsset) => {
         setFromAsset(asset);
     };
-    const handleToAssetChange = (asset) => {
+    const handleToAssetChange = (asset: SolanaAsset) => {
         setToAsset(asset);
     };
 
@@ -117,12 +132,14 @@ const SwapeWithConfidence = () => {
         setFromAmount(Number(event.target.value));
     };
     console.log({ quoteResponse })
-    const debounceQuoteCall = useCallback(debounce(getQuote, 500), []);
+    const debounceQuoteCall = useCallback(debounce((currentAmount: number, from: SolanaAsset | null, to: SolanaAsset | null) => {
+        if (from && to) getQuote(currentAmount, from, to);
+    }, 500), []);
     useEffect(() => {
         debounceQuoteCall(fromAmount, fromAsset, toAsset);
-    }, [fromAmount, debounceQuoteCall]);
+    }, [fromAmount, fromAsset, toAsset, debounceQuoteCall]);
 
-    async function getQuote(currentAmount: number, fromAsset: { id: string, decimals: number }, toAsset: { id: string, decimals: number }) {
+    async function getQuote(currentAmount: number, fromAsset: SolanaAsset, toAsset: SolanaAsset) {
         if (isNaN(currentAmount) || currentAmount <= 0) {
             setToAmount(0);
             setLoading(false);
@@ -133,7 +150,7 @@ const SwapeWithConfidence = () => {
             const url = `https://ultra-api.jup.ag/order?inputMint=${fromAsset.id}&outputMint=${toAsset.id}&amount=${currentAmount * 10 ** fromAsset.decimals}&swapMode=ExactIn`;
             const quote = await (await fetch(url)).json();
             if (quote && quote.outAmount) {
-                const outAmountNumber = Number(quote.outAmount) / 10 ** toAsset?.decimals;
+                const outAmountNumber = Number(quote.outAmount) / 10 ** toAsset.decimals;
                 setToAmount(outAmountNumber);
             } else {
                 setToAmount(0);
@@ -221,7 +238,7 @@ const SwapeWithConfidence = () => {
             setVisible(true);
         } else {
             try {
-                const resp = await wallet.connect();
+                const resp: any = await wallet.connect();
                 toast.success('Wallet connected', {
                     description: resp?.publicKey?.toString() || ''
                 });
@@ -277,7 +294,7 @@ const SwapeWithConfidence = () => {
                                 </div>
                                 {wallet.connected ? (
                                     <SwapButton onClick={signAndSendTransaction} loading={loading} disabled={fromAmount <= 0 || !quoteResponse}>
-                                        Swap
+                                        {!loading ? "Swap" : "Loading"}
                                     </SwapButton>
                                 ) : (
                                     <Button

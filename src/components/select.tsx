@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDown, ChevronDownIcon } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { cn, debounce } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -70,7 +70,7 @@ export function Select({ value, setValue, className = "absolute right-2.5 top-1.
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0 w-auto" side="left" align="start" >
-                <Command value={query} onChange={(e) => { setQuery(e.target.value) }}>
+                <Command value={query} onChange={(e: any) => { setQuery(e.target.value) }}>
                     <CommandInput disabled={loading} placeholder="Search" />
                     <CommandList>
                         <CommandEmpty>{error ? error : "No asset found."}</CommandEmpty>
