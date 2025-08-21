@@ -12,8 +12,8 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { debounce } from "@/lib/utils";
 import { toast } from "sonner";
-const SOL_MINT = "So11111111111111111111111111111111111111112";
-const SOL_DRIP_MINT = "w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV";
+const SOL_MINT = import.meta.env.VITE_SOL_MINT || "So11111111111111111111111111111111111111112";
+const SOL_DRIP_MINT = import.meta.env.VITE_DRIP_TOKEN_ADDRESS || "w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV";
 
 const TOKENS = [
     SOL_MINT,
@@ -83,9 +83,9 @@ const SwapeWithConfidence = () => {
     const [direction, setDirection] = useState<'up' | 'down'>('up');
     const { setVisible } = useWalletModal();
 
-    const [assets, setAssets] = useState<SolanaAsset[]>([]);
     const [error, setError] = useState<Error | null>(null);
-    console.log({ error })
+    const env = import.meta.env;
+    console.log({ error, env })
 
     useEffect(() => {
         async function fetchSolanaAssets() {
@@ -97,7 +97,6 @@ const SwapeWithConfidence = () => {
                     allAssets.push(response[0]);
                 }))
 
-                setAssets(allAssets);
                 setFromAsset(allAssets[0]);
                 setToAsset(allAssets[1]);
             } catch (err) {
@@ -110,7 +109,7 @@ const SwapeWithConfidence = () => {
     }, []);
     const wallet = useWallet();
     const connection = new Connection(
-        'https://mainnet.helius-rpc.com/?api-key=782d4993-d148-432a-b92a-aa23f59d0077'
+        `https://mainnet.helius-rpc.com/?api-key=${import.meta.env.VITE_JUP_API_KEY || "782d4993-d148-432a-b92a-aa23f59d0077"}`
     );
 
 
@@ -250,7 +249,7 @@ const SwapeWithConfidence = () => {
         }
     };
 
-    console.log({ assets, fromAsset, toAsset })
+    console.log({ wallet })
 
     return (
         <section id="swapping-confidence" className="mb-16 md:mb-20 pt-26 -mt-26">

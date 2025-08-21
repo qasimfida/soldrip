@@ -15,7 +15,7 @@ interface SolanaProviderProps {
 }
 
 export const SolanaProvider: FC<SolanaProviderProps> = ({ children }) => {
-    const network = WalletAdapterNetwork.Testnet;
+    const network = WalletAdapterNetwork.Mainnet;
     const wallets = useMemo(
         () => [
             new PhantomWalletAdapter(),
