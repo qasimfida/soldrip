@@ -32,7 +32,7 @@ const Experience = () => {
             <div className="pt-8 pb-5">
                 <Ecosystem description="" title="growing ecosystem" highlight="part of a " />
             </div>
-            <WhyDrip options={WHY_DRIP_EXPERIENCE} title="it works" highlight="Why " description="The more you hold, the more you earn. The more you earn, the more you hold. Welcome to the virtuous cycle." />
+            <WhyDrip options={WHY_DRIP_EXPERIENCE} title="it works" highlight="Why " description="Because Your Wallet Gets Wetter On A Steady Rhythm" />
             <PartOfUs />
             <div className="flex flex-col mt-5 mb-10 md:mb-20">
                 <img src={logo} alt="" className="max-w-[364px] w-full mx-auto" />
