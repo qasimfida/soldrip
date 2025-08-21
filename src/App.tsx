@@ -4,11 +4,13 @@ import FAQPage from './pages/FAQ'
 import { WalletProvider } from './contexts/wallet'
 import Proof from './pages/Proof'
 import Experience from './pages/Experience'
+import { Toaster } from "sonner";
 
 import bg from '@/assets/cover-bg.png'
 import Home from './pages/Home'
 
 const App = () => {
+
   return (
     <WalletProvider>
       <BrowserRouter>
@@ -22,6 +24,7 @@ const App = () => {
               <Route path="/faq" element={<FAQPage />} />
             </Routes>
           </div>
+          <Toaster richColors position="top-right" />
         </div>
       </BrowserRouter>
     </WalletProvider>

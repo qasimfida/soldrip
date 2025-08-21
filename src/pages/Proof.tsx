@@ -24,7 +24,7 @@ const Proof = () => {
 
     return (
         <>
-            <Header hasBuyButton={false} />
+            <Header hasNavigation={false} />
             <main className="relative min-h-screen text-white">
                 <Hero title="utility " gradientText="drives community" description="Secure swap via Jupiter Exchange-the #1 DEX aggregator on Solana." footer="Secure swap via Jupiter Exchange-the #1 DEX aggregator on Solana." buttonText="Swap $SOL for DRIP Now" />
                 <Swapping />

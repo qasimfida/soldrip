@@ -1,130 +1,239 @@
 declare global {
     interface Window { solana?: any }
 }
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Container } from "./container";
 import { Connection, PublicKey, VersionedTransaction } from '@solana/web3.js';
-const DRIP_MINT = 'w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV';
-const SOL_MINT = 'So11111111111111111111111111111111111111112';
-const JUP_API_KEY = 'd64d5f26-83b4-4ef9-8c06-02298cdb4d23';
-const RPC_ENDPOINT = "https://mainnet.helius-rpc.com/?api-key=782d4993-d148-432a-b92a-aa23f59d0077";
-const USDT_MINT = 'Es9vMFrzaCERk8b1r5p6QkQJc5uQh6vEihwM6rvz5F9';
 import { Buffer } from 'buffer';
 import { Button } from "./ui/button";
 import SwapIcon from "./icons/swap-icon";
+import { Select } from "./select";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { debounce } from "@/lib/utils";
+import { toast } from "sonner";
+const SOL_MINT = "So11111111111111111111111111111111111111112";
+const SOL_DRIP_MINT = "w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV";
+
+const TOKENS = [
+    SOL_MINT,
+    SOL_DRIP_MINT
+]
+
+const TokenSelect = ({ options, value, setValue, disabled }: any) => (
+    <Select options={options} value={value} setValue={setValue} disabled={disabled} />
+);
+
+type TokenInputProps = {
+    value: number;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled: boolean;
+    placeholder: string;
+}
+
+type SwapButtonProps = {
+    onClick: () => void;
+    loading: boolean;
+    disabled: boolean;
+    children: React.ReactNode;
+}
+
+const TokenInput = ({ value, onChange, disabled, placeholder }: TokenInputProps) => (
+    <input
+        type="number"
+        value={value || ""}
+        placeholder={placeholder}
+        onChange={onChange}
+        disabled={disabled}
+        className="mx-auto w-full max-w-full h-full text-left text-white rounded-lg border-0 outline-none placeholder:text-muted"
+    />
+);
+
+const SwapButton = ({ onClick, loading, disabled, children }: SwapButtonProps) => (
+    <Button
+        onClick={onClick}
+        disabled={loading || disabled}
+        className="block right-0 left-0 px-8 mx-auto w-full text-xl font-semibold rounded-full bg-gradient-primary md:px-12 shadow-primary"
+    >
+        {loading ? 'Swapping...' : children}
+    </Button>
+);
 
 const SwapeWithConfidence = () => {
-    const [walletAddress, setWalletAddress] = useState<string | null>(null);
-    const [amount, setAmount] = useState(""); // string for input
-    const [usdtValue, setUsdtValue] = useState<string>("");
+    const [fromAsset, setFromAsset] = useState(null);
+    const [toAsset, setToAsset] = useState(null);
+    const [fromAmount, setFromAmount] = useState(0);
+    const [toAmount, setToAmount] = useState(0);
+    const [quoteResponse, setQuoteResponse] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [swapDirection, setSwapDirection] = useState<"SOL_TO_DRIP" | "DRIP_TO_SOL">("SOL_TO_DRIP");
-    const [balance, setBalance] = useState<number>(0);
+    const [direction, setDirection] = useState("up");
+    const { setVisible } = useWalletModal();
+
+    const [assets, setAssets] = useState<any[]>([]);
+    const [error, setError] = useState<any>(null);
 
     useEffect(() => {
-        if (window.solana && window.solana.isConnected && window.solana.publicKey) {
-            setWalletAddress(window.solana.publicKey.toString());
-        } else {
-            connectWallet()
-        }
-    }, []);
-
-    useEffect(() => {
-        if (!walletAddress) return;
-        const connection = new Connection(RPC_ENDPOINT);
-        if (swapDirection === "SOL_TO_DRIP") {
-            connection.getBalance(new PublicKey(walletAddress)).then(lamports => {
-                setBalance(lamports / 1e9);
-            });
-        } else {
-            connection.getTokenAccountsByOwner(new PublicKey(walletAddress), {
-                mint: new PublicKey(DRIP_MINT)
-            }).then(res => {
-                if (res.value.length === 0) {
-                    setBalance(0);
-                } else {
-                    const accountInfo = res.value[0].account.data;
-                    console.log({ accountInfo });
-                    setBalance(0);
-                }
-            });
-        }
-    }, [walletAddress, swapDirection]);
-
-    useEffect(() => {
-        if (!amount || isNaN(Number(amount))) {
-            setUsdtValue("");
-            return;
-        }
-        const fetchUSDT = async () => {
-            const inputMint = swapDirection === "SOL_TO_DRIP" ? SOL_MINT : DRIP_MINT;
-            const outputMint = USDT_MINT;
-            const lamports = Math.floor(parseFloat(amount) * 1e9);
-            const quoteRes = await fetch(
-                `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${lamports}`,
-                { headers: { 'apikey': JUP_API_KEY } }
-            );
-            const quote = await quoteRes.json();
-            if (quote.outAmount) {
-                setUsdtValue((Number(quote.outAmount) / 1e6).toFixed(2));
-            } else {
-                setUsdtValue("0.00");
-            }
-        };
-        fetchUSDT();
-    }, [amount, swapDirection]);
-
-    const connectWallet = async () => {
-        if (window.solana) {
+        async function fetchSolanaAssets() {
             try {
-                const resp = await window.solana.connect();
-                setWalletAddress(resp.publicKey.toString());
-            } catch {
-                alert("Wallet connection failed!");
+                const allAssets: any[] = [];
+                await Promise.all(TOKENS.map(async (token) => {
+                    const res = await fetch(`https://datapi.jup.ag/v1/assets/search?query=${token}`);
+                    const response = await res.json();
+                    allAssets.push(response[0]);
+                }))
+
+                setAssets(allAssets);
+                setFromAsset(allAssets[0]);
+                setToAsset(allAssets[1]);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
             }
-        } else {
-            alert("Phantom wallet not found!");
         }
+        fetchSolanaAssets();
+    }, []);
+    const wallet = useWallet();
+    const connection = new Connection(
+        'https://mainnet.helius-rpc.com/?api-key=782d4993-d148-432a-b92a-aa23f59d0077'
+    );
+
+
+    const handleFromAssetChange = async (asset) => {
+        setFromAsset(asset);
+    };
+    const handleToAssetChange = (asset) => {
+        setToAsset(asset);
     };
 
-    const handleSwap = async () => {
-        if (!walletAddress) {
-            alert("Connect your wallet first!");
+    const handleDirection = () => {
+        setDirection(direction === "up" ? "down" : "up");
+        setFromAsset(toAsset);
+        setToAsset(fromAsset);
+        setFromAmount(toAmount);
+        setToAmount(fromAmount);
+    }
+    const handleFromValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFromAmount(Number(event.target.value));
+    };
+    console.log({ quoteResponse })
+    const debounceQuoteCall = useCallback(debounce(getQuote, 500), []);
+    useEffect(() => {
+        debounceQuoteCall(fromAmount, fromAsset, toAsset);
+    }, [fromAmount, debounceQuoteCall]);
+
+    async function getQuote(currentAmount: number, fromAsset: { id: string, decimals: number }, toAsset: { id: string, decimals: number }) {
+        if (isNaN(currentAmount) || currentAmount <= 0) {
+            setToAmount(0);
+            setLoading(false);
             return;
         }
         setLoading(true);
+        try {
+            const url = `https://ultra-api.jup.ag/order?inputMint=${fromAsset.id}&outputMint=${toAsset.id}&amount=${currentAmount * 10 ** fromAsset.decimals}&swapMode=ExactIn`;
+            const quote = await (await fetch(url)).json();
+            if (quote && quote.outAmount) {
+                const outAmountNumber = Number(quote.outAmount) / 10 ** toAsset?.decimals;
+                setToAmount(outAmountNumber);
+            } else {
+                setToAmount(0);
+            }
+            setQuoteResponse(quote);
+        } catch (e) {
+            toast.error('Quote Error', {
+                description: 'Failed to fetch quote. Please try again.'
+            });
+            setToAmount(0);
+        } finally {
+            setLoading(false);
+        }
+    }
 
-        const inputMint = swapDirection === "SOL_TO_DRIP" ? SOL_MINT : DRIP_MINT;
-        const outputMint = swapDirection === "SOL_TO_DRIP" ? DRIP_MINT : SOL_MINT;
-        const lamports = Math.floor(parseFloat(amount) * 1e9);
+    async function signAndSendTransaction(retry = false) {
+        if (!wallet.signTransaction) {
+            toast.error('Wallet not ready', {
+                description: 'Please connect a wallet that supports transaction signing.'
+            });
+            return;
+        }
+        setLoading(true);
+        try {
+            const { swapTransaction, blockhash, lastValidBlockHeight } = await (
+                await fetch('https://quote-api.jup.ag/v6/swap', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        quoteResponse,
+                        userPublicKey: wallet.publicKey?.toString(),
+                        wrapAndUnwrapSol: true,
+                    }),
+                })
+            ).json();
+            const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
+            const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
+            const signedTransaction = await wallet.signTransaction(transaction);
+            const rawTransaction = signedTransaction.serialize();
+            const txid = await connection.sendRawTransaction(rawTransaction, {
+                skipPreflight: true,
+                maxRetries: 2,
+            });
+            await connection.confirmTransaction({
+                blockhash,
+                lastValidBlockHeight,
+                signature: txid
+            }, 'confirmed');
+            toast.success('Swap sent!', {
+                description: `Txid: ${txid}`
+            });
+        } catch (error: unknown) {
+            let message = 'Unknown error';
+            if (typeof error === 'object' && error !== null) {
+                // @ts-ignore
+                message = error.message || message;
+            }
+            if (
+                // @ts-ignore
+                error?.name === 'TransactionExpiredBlockheightExceededError' ||
+                // @ts-ignore
+                (error?.message && error?.message?.includes('block height exceeded'))
+            ) {
+                if (!retry) {
+                    await signAndSendTransaction(true);
+                } else {
+                    toast.error('Transaction failed', {
+                        description: 'Blockhash expired. Please try again.'
+                    });
+                }
+            } else {
+                toast.error('Error sending transaction', {
+                    description: message
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
 
-        const quoteRes = await fetch(
-            `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${lamports}`,
-            { headers: { 'apikey': JUP_API_KEY } }
-        );
-        const quote = await quoteRes.json();
-
-        const swapRes = await fetch('https://quote-api.jup.ag/v6/swap', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': JUP_API_KEY },
-            body: JSON.stringify({
-                quoteResponse: quote,
-                userPublicKey: window.solana.publicKey.toString(),
-                wrapUnwrapSOL: true
-            })
-        });
-        const { swapTransaction } = await swapRes.json();
-
-        const transaction = VersionedTransaction.deserialize(Buffer.from(swapTransaction, 'base64'));
-        const connection = new Connection(RPC_ENDPOINT);
-        const signed = await window.solana.signTransaction(transaction);
-        const txid = await connection.sendRawTransaction(signed.serialize());
-        alert('Swap sent! Txid: ' + txid);
-        setLoading(false);
+    const connectWallet = async () => {
+        if (!wallet.connected) {
+            setVisible(true);
+        } else {
+            try {
+                const resp = await wallet.connect();
+                toast.success('Wallet connected', {
+                    description: resp?.publicKey?.toString() || ''
+                });
+            } catch {
+                toast.error('Wallet connection failed', {
+                    description: 'Please try again or use a different wallet.'
+                });
+            }
+        }
     };
 
-    const insufficient = !!amount && parseFloat(amount) > balance;
-
+    console.log({ assets, fromAsset, toAsset })
 
     return (
         <section id="swapping-confidence" className="mb-16 md:mb-20 pt-26 -mt-26">
@@ -134,7 +243,6 @@ const SwapeWithConfidence = () => {
                         <h1 className=" font-bold  uppercase text-uppercase text-xl leading-13 md:text-[32px]">
                             <span className="text-gradient-primary">SWAP WITH</span> CONFIDENCE
                         </h1>
-
                         <p className="text-2xl font-normal leading-8 text-white">
                             This swap is powered by Jupiter Exchange, ensuring you get the best available price for DRIP on Solana.
                         </p>
@@ -148,49 +256,34 @@ const SwapeWithConfidence = () => {
                     <div className="flex justify-end">
                         <div className="flex flex-col max-w-[527px] items-center justify-center  rounded-[24px] bg-gradient-primary p-[1px] w-full h-auto">
                             <div className="relative flex flex-col items-center p-10 rounded-[24px] bg-[#030014] h-full w-full">
-                                <div className="relative w-full h-15 gradient-border">
-                                    <div className="w-full h-15 gradient-border-inner">
-                                        <input
-                                            type="text"
-                                            placeholder={swapDirection === "SOL_TO_DRIP" ? "$SOL" : "$DRIP"}
-                                            value={amount}
-                                            onChange={e => setAmount(e.target.value)}
-                                            className="mx-auto w-full max-w-full h-full text-left text-white rounded-lg border-0 outline-none placeholder:text-muted"
-                                        />
+                                <div className="relative w-full" >
+                                    <div className="flex relative z-0 justify-center items-center w-full h-15 gradient-border">
+                                        <div className="w-full h-15 gradient-border-inner">
+                                            <TokenInput placeholder={`$${fromAsset?.symbol || "SOL"}`} value={fromAmount} onChange={handleFromValueChange} disabled={loading} />
+                                        </div>
                                     </div>
+                                    <TokenSelect value={fromAsset} setValue={handleFromAssetChange} disabled={loading} />
                                 </div>
-                                <div className="text-right text-sm absolute right-12 top-25 text-[#D9DADF] mt-2 mb-2">
-                                    {usdtValue && <>≈ {usdtValue} USDT</>}
-                                </div>
-                                <div className="my-3 text-center cursor-pointer" onClick={() => setSwapDirection(swapDirection === "SOL_TO_DRIP" ? "DRIP_TO_SOL" : "SOL_TO_DRIP")}>
+                                <div className="my-3 text-center cursor-pointer" onClick={handleDirection}>
                                     <SwapIcon />
                                 </div>
-                                <div className="relative w-full h-15 gradient-border">
-                                    <div className="w-full h-15 gradient-border-inner">
-                                        <input
-                                            type="text"
-                                            placeholder={swapDirection === "SOL_TO_DRIP" ? "$DRIP" : "$SOL"}
-                                            readOnly
-                                            className="mx-auto w-full max-w-full h-full text-left text-white rounded-lg border-0 outline-none placeholder:text-muted"
-                                        />
+                                <div className="relative mb-10 w-full" >
+                                    <div className="flex relative z-0 justify-center items-center w-full h-15 gradient-border">
+                                        <div className="w-full h-15 gradient-border-inner">
+                                            <TokenInput placeholder={`$${toAsset?.symbol || "DRIP"}`} value={toAmount} onChange={() => { }} disabled={true} />
+                                        </div>
                                     </div>
+                                    <TokenSelect value={toAsset} setValue={handleToAssetChange} disabled={loading} />
                                 </div>
-
-                                <div className="block w-full text-right text-base text-[#D9DADF] mt-3 mb-10">
-                                    Balance: {balance.toFixed(6)}
-                                </div>
-                                {walletAddress ? (
-                                    <Button
-                                        onClick={handleSwap}
-                                        className="block right-0 left-0 px-8 mx-auto w-full text-xl font-semibold rounded-full bg-gradient-primary md:px-12 shadow-primary"
-                                        disabled={loading || insufficient}
-                                    >
-                                        {insufficient ? "Insufficient Balance" : "Swap"}
-                                    </Button>
+                                {wallet.connected ? (
+                                    <SwapButton onClick={signAndSendTransaction} loading={loading} disabled={fromAmount <= 0 || !quoteResponse}>
+                                        Swap
+                                    </SwapButton>
                                 ) : (
                                     <Button
                                         onClick={connectWallet}
                                         className="block right-0 left-0 px-8 mx-auto w-full text-xl font-semibold rounded-full bg-gradient-primary md:px-12 shadow-primary"
+                                        disabled={loading}
                                     >
                                         Connect Wallet
                                     </Button>

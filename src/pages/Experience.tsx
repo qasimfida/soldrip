@@ -7,6 +7,7 @@ import Ecosystem from '@/components/ecosystem'
 import { WHY_DRIP_EXPERIENCE } from '@/constants/why-drip'
 import PartOfUs from '@/components/part-of-us'
 import logo from '@/assets/logo-xl.svg'
+import { Header } from '@/components/header'
 
 
 const Experience = () => {
@@ -24,7 +25,8 @@ const Experience = () => {
         }
     }, [location.hash]);
 
-    return (
+    return (<>
+        <Header hasNavigation={false} />
         <main className="relative min-h-screen text-white">
             <Hero title="Experience Utility " gradientText="in Motion" description="A live, on-chain experiment testing how blockchain rewards can drive lasting community engagement." footer="Secure swap powered by Jupiter Exchange" buttonText="Swap $SOL for DRIP Now" />
             <div className="pt-8 pb-5">
@@ -41,6 +43,7 @@ const Experience = () => {
                 </div>
             </div>
         </main>
+    </>
     )
 }
 

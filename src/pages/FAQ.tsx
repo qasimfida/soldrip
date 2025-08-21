@@ -8,8 +8,8 @@ const FAQPage = () => {
             <Header />
             <main>
                 <FAQ />
-                <Footer />
             </main>
+            <Footer />
         </>
     )
 }
