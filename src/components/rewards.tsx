@@ -113,7 +113,7 @@ const Rewards = () => {
                         </div>
                         <div className="flex flex-col gap-10 md:gap-0 md:flex-row md:justify-between items-center animate__animated animate__fadeInUp animate__delay-3s mt-[60px]">
                             <div className="h-min-content">
-                                <Title type="heading" className="" highlight="Rewards on a" >Rhythm</Title>
+                                <Title type="heading" className="" highlight="Rewards on a " >Rhythm</Title>
                                 <div className="flex flex-col pt-1">
                                     {REWARDS_EVERY_5_MINUTES.map((item, index) => (
                                         <p className="flex items-center text-lg leading-10 text-white" key={`rewards-every-5-minutes-${index + 1}`} > <span className="text-secondary" ><ChevronRight className="mr-1 h-6" /></span>{item}</p>
