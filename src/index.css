@@ -563,7 +563,6 @@
 .gradient-border {
   background: linear-gradient(90deg, #988AF3 0%, #56C9C9 100%);
   border-radius: 52px;  
-  padding: 1px;
   display: inline-flex;
 }
 
@@ -579,7 +578,6 @@
 .secondary-gradient-border {
   background: linear-gradient(180deg, #56C9C9 0%, #030014 100%);
   border-radius: 24px;
-  padding: 1px;
   display: inline-flex;
 }
 .secondary-gradient-border-inner {

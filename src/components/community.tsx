@@ -17,7 +17,7 @@ const Community = () => {
                     Just Coin
                 </Title>
                 <p className="mt-4 text-base text-center text-white mb-17 md:text-3xl animate__animated animate__fadeIn animate__delay-1">
-                    Why $DRIP Is a <span className="text-secondary" >Cult</span>, Not a Fad
+                    We don’t build projects. We live them.
                 </p>
 
                 <div className="flex flex-wrap gap-6 mt-10 md:flex-nowrap">

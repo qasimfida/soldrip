@@ -72,23 +72,23 @@ const Rewards = () => {
                     <Title highlight="Tokenomics and " >
                         Rewards
                     </Title>
-                    <p className="text-base font-normal text-center text-white md:text-xl">Pockets stay full, even when the market flushes</p>
+                    <p className="text-base font-normal text-center text-white md:text-xl">Deflationary by Design. Rewards by Default. A Token That Works as Hard as You Hold.</p>
                     <div className="flex flex-wrap gap-8 justify-center items-center my-10 md:flex-row">
                         {/* <Button size="lg" className="px-5 text-xl font-semibold bg-gradient-primary-linear shadow-primary" onClick={() => setOpenCalculator(true)}>Rewards Calculator</Button> */}
                         <Button
-                            className="px-5 text-base rounded-full bg-gradient-primary-dark shadow-primary"
+                            className="px-5 text-base uppercase rounded-full bg-gradient-primary-dark shadow-primary"
                             onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Token Details
                         </Button>
                         <Button
-                            className="px-5 text-base rounded-full bg-gradient-secondary-dark shadow-primary"
+                            className="px-5 text-base uppercase rounded-full bg-gradient-secondary-dark shadow-primary"
                             onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Distribution History
                         </Button>
                         <Button
-                            className="px-5 text-base rounded-full bg-gradient-danger-dark shadow-primary"
+                            className="px-5 text-base uppercase rounded-full bg-gradient-danger-dark shadow-primary"
                             onClick={() => window.open(`http://revshare.dev/token-landing/${VITE_DRIP_TOKEN_ADDRESS}`, '_blank')}
                         >
                             Rewards & Tokenomics
@@ -113,7 +113,7 @@ const Rewards = () => {
                         </div>
                         <div className="flex flex-col gap-10 md:gap-0 md:flex-row md:justify-between items-center animate__animated animate__fadeInUp animate__delay-3s mt-[60px]">
                             <div className="h-min-content">
-                                <Title type="heading" className="" highlight="Rewards on a " >Rhythm</Title>
+                                <Title type="heading" className="uppercase" highlight="Rewards on a " >Rhythm</Title>
                                 <div className="flex flex-col pt-1">
                                     {REWARDS_EVERY_5_MINUTES.map((item, index) => (
                                         <p className="flex items-center text-lg leading-10 text-white" key={`rewards-every-5-minutes-${index + 1}`} > <span className="text-secondary" ><ChevronRight className="mr-1 h-6" /></span>{item}</p>
@@ -122,7 +122,7 @@ const Rewards = () => {
                             </div>
                             <div className="flex flex-col items-center justify-center  rounded-[24px] bg-gradient-primary py-[2px] max-w-[544px] w-full h-auto">
                                 <div className="inline-flex flex-col items-center p-10 rounded-[24px] bg-[#030014] h-[calc(100%-2px)] w-[calc(100%-2px)]  max-w-[calc(100%-2px)] max-h-[calc(100%-2px)]">
-                                    <Title type="heading" className="" highlight="Check My " >
+                                    <Title type="heading" className="uppercase" highlight="Check My " >
                                         Rewards
                                     </Title>
 
