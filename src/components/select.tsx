@@ -54,7 +54,6 @@ export function Select({ value, setValue, className = "absolute right-2.5 top-1.
     if (value && value.id && !assets.some(asset => asset.id === value.id)) {
         sortedAssets = [value, ...assets];
     }
-    console.log({ value, sortedAssets })
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

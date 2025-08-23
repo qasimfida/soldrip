@@ -4,14 +4,16 @@ declare global {
 import { useEffect, useState, useCallback } from "react";
 import { Container } from "./container";
 import { Connection, VersionedTransaction } from '@solana/web3.js';
-import { Buffer } from 'buffer';
 import { Button } from "./ui/button";
 import SwapIcon from "./icons/swap-icon";
 import { Select } from "./select";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { debounce } from "@/lib/utils";
+import { Buffer } from 'buffer';
 import { toast } from "sonner";
+import { debounce } from "@/lib/utils";
+
+
 const SOL_MINT = import.meta.env.VITE_SOL_MINT || "So11111111111111111111111111111111111111112";
 const SOL_DRIP_MINT = import.meta.env.VITE_DRIP_TOKEN_ADDRESS || "w131jbryFvFEmtqmZvx42Meiuc4Drmu3nodTdVgkREV";
 
@@ -20,7 +22,6 @@ const TOKENS = [
     SOL_DRIP_MINT
 ]
 
-// Asset type for Solana tokens
 interface SolanaAsset {
     id: string;
     name: string;
@@ -83,9 +84,8 @@ const SwapeWithConfidence = () => {
     const [direction, setDirection] = useState<'up' | 'down'>('up');
     const { setVisible } = useWalletModal();
 
-    const [error, setError] = useState<Error | null>(null);
-    const env = import.meta.env;
-    console.log({ error, env })
+    // const [error, setError] = useState<Error | null>(null);
+    // const env = import.meta.env;
 
     useEffect(() => {
         async function fetchSolanaAssets() {
@@ -100,7 +100,8 @@ const SwapeWithConfidence = () => {
                 setFromAsset(allAssets[0]);
                 setToAsset(allAssets[1]);
             } catch (err) {
-                setError(err instanceof Error ? err : new Error(String(err)));
+                console.log({ err })
+                // setError(err instanceof Error ? err : new Error(String(err)));
             } finally {
                 setLoading(false);
             }
@@ -109,7 +110,7 @@ const SwapeWithConfidence = () => {
     }, []);
     const wallet = useWallet();
     const connection = new Connection(
-        `https://mainnet.helius-rpc.com/?api-key=${import.meta.env.VITE_JUP_API_KEY || "782d4993-d148-432a-b92a-aa23f59d0077"}`
+        `https://mainnet.helius-rpc.com/?api-key=782d4993-d148-432a-b92a-aa23f59d0077`
     );
 
 
@@ -130,7 +131,6 @@ const SwapeWithConfidence = () => {
     const handleFromValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFromAmount(Number(event.target.value));
     };
-    console.log({ quoteResponse })
     const debounceQuoteCall = useCallback(debounce((currentAmount: number, from: SolanaAsset | null, to: SolanaAsset | null) => {
         if (from && to) getQuote(currentAmount, from, to);
     }, 500), []);
@@ -188,6 +188,8 @@ const SwapeWithConfidence = () => {
                 })
             ).json();
             const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
+            console.log({ swapTransactionBuf })
+
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
             const signedTransaction = await wallet.signTransaction(transaction);
             const rawTransaction = signedTransaction.serialize();
@@ -248,8 +250,6 @@ const SwapeWithConfidence = () => {
             }
         }
     };
-
-    console.log({ wallet })
 
     return (
         <section id="swapping-confidence" className="mb-16 md:mb-20 pt-26 -mt-26">

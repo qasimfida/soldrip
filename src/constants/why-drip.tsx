@@ -38,7 +38,7 @@ export const WHY_DRIP: WhyDripItem[] = [
     {
         name: "DIVIDENDS",
         icon: Money,
-        title: "COMMUNITY-BACKED ",
+        title: <span className="block text-gradient-white"> COMMUNITY-BACKED </span>,
         highlight: "DIVIDENDS",
         description: "As usage grows, so does the reward pool; without needing to sell the token. "
     },

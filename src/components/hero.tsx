@@ -50,13 +50,13 @@ const Hero = ({ title, gradientText, description, buttonText, onClick, hasAddres
             {buttonText}
           </Button>
           {hasAddress && (
-            <div className="h-16 gradient-border">
+            <div className="flex justify-center items-center h-16 gradient-border">
               <div className="flex relative flex-col items-center max-w-full font-medium leading-4 text-center gradient-border-inner gradient-border text-secondary md:text-base hover:animate__animated hover:animate__flash">
                 <span className='text-gradient-primary text-[10px] inline-block mb-1 roboto' >Contract Address</span>
                 <div className="flex relative gap-3">
                   <span className='text-xs text-white line-clamp-1 roboto-500' >{VITE_DRIP_TOKEN_ADDRESS}</span>
                   <img src={CopyIcon} onMouseEnter={() => { setIsCopied(false); setTooltip(true) }} onMouseLeave={() => setTimeout(() => setTooltip(false), 1000)} alt="Copy" onClick={handleCopy} />
-                  {tooltip && <div className='absolute -top-3 px-4 py-1 text-xs text-white rounded-full bg-black/80'>{isCopied ? "Copied" : "Copy"}</div>}
+                  {tooltip && <div className='absolute -right-4 -top-7 px-4 py-1 text-xs text-white rounded-full bg-black/80'>{isCopied ? "Copied" : "Copy"}</div>}
                 </div>
               </div>
             </div>
