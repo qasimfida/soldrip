@@ -131,7 +131,7 @@ const Rewards = () => {
                                             <p className="flex items-center text-sm text-white md:text-base">
                                                 Enter your wallet address to see total $DRIP rewards paid in SOL!
                                             </p>
-                                            <div className="relative mt-8 mb-10 w-full h-15 gradient-border p-[1px]">
+                                            <div className="flex relative justify-center items-center mt-8 mb-10 w-full h-15 gradient-border">
                                                 <div className="w-full h-15 gradient-border-inner">
                                                     <input
                                                         type="text"
