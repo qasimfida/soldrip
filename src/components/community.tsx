@@ -14,7 +14,7 @@ const Community = () => {
         <section id="community" className="pt-26 -mt-26" >
             <Container id="tokenomics" className="py-16  md:py-[120px]" >
                 <Title className="animate__animated animate__fadeIn" highlight="Community, Not ">
-                    Just Coin
+                    Just a Coin
                 </Title>
                 <p className="mt-4 text-base text-center text-white mb-17 md:text-3xl animate__animated animate__fadeIn animate__delay-1">
                     We don’t build projects. We live them.
@@ -32,7 +32,7 @@ const Community = () => {
                     <div className="w-full lg:w-[60%] rounded-xl p-10 flex flex-col justify-between relative">
                         <img src={background2} alt="background" className="absolute top-0 left-0 z-0 w-full h-full" />
                         <div className="z-10" >
-                            <h3 className="mb-2 font-bold text-white text-[30px]">$DRIP ECOSYSTEM: PLAY. EARN. DOMINATE.</h3>
+                            <h3 className="mb-2 font-bold text-white text-[30px]">PLAY. EARN. DOMINATE.</h3>
                             <p className="text-lg font-medium text-white/80 roboto">A rapidly growing network of online games and DeFi tools that reward users in $DRIP</p>
                         </div>
                         <img src={Icon2} alt="Ecosystem Icon" className="z-10 mt-6 w-10 h-10" />

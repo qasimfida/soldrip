@@ -1,7 +1,7 @@
 import Title from "@/components/title"
 import { Container } from "./container"
 import jupiter from "../assets/community/jupiter.svg"
-import deepfiGames from "../assets/community/deepfi-games.svg"
+import deepfiGames from "../assets/community/deepfi-games.png"
 import revshare from "../assets/community/revshare.svg"
 import solana from "../assets/community/solana.svg"
 

@@ -17,7 +17,7 @@ const RoadMap = () => {
                 <img src={Loop} alt="background" className="block max-h-full" />
             </div>
             <Container className="relative">
-                <Title highlight="Road ">map</Title>
+                <Title highlight="Road">map</Title>
                 <p className="text-xl font-normal text-center text-white mb-17" >
                     Forget the roadmap. This is a movement.
                 </p>
